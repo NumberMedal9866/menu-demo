@@ -4,6 +4,7 @@ import { URL, fileURLToPath } from 'node:url';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './', // Add this line
   plugins: [vue()],
   css: {
     devSourcemap: true
@@ -15,8 +16,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      // Add all external dependencies here
-      external: ['pinia'],
+      external: ['pinia'], // Only externalize 'pinia' if needed
     }
   }
 });

@@ -16,7 +16,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       // Add all external dependencies here
-      external: ['pinia', 'vue-router'],
+      external: ['pinia'],
     }
   }
 });

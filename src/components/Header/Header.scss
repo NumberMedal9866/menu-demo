@@ -1,0 +1,34 @@
+.header{
+    width: 100%;
+    height: 200px;
+    background-image: url('@/assets/img/header.jpg');
+    background-repeat: no-repeat;
+    // background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    // position: relative;
+    a{
+        z-index: 999;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        background: #fff;
+        // padding: 16px;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        position: fixed;
+        left: 20px;
+        top: 30px;
+        // top: 20px;
+        // left: 20px;
+        // position: absolute;
+        // margin: 200px 0 0 20px;
+        // margin: 20px;
+        // margin-top: 20px !important;
+    }
+}

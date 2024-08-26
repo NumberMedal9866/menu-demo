@@ -1,0 +1,63 @@
+{
+  "breakfast": [
+    {"id": 1, "name": "Тост с яйцом", "url": "src/assets/img/breakfast/b1.png", "descr": "Яйца жареные, помидор, тост, зеленый лук", "price": "69 000"},
+    {"id": 2, "name": "Сэндвич с яичницей", "url": "src/assets/img/breakfast/b2.png", "descr": "Хлеб, яйцо, крем чиз", "price": "45 000"},
+    {"id": 3, "name": "Панкейки", "url": "src/assets/img/breakfast/b3.png", "descr": "Ягоды, масло, сироп", "price": "50 000"},
+    {"id": 4, "name": "Овсяная каша", "url": "src/assets/img/breakfast/b4.png", "descr": "Овсяные хлопья, орехи, кишмиш", "price": "36 000"},
+    {"id": 5, "name": "Вафли", "url": "src/assets/img/breakfast/b5.png", "descr": "Сливки, клубника, голубика, посыпка", "price": "60 000"},
+    {"id": 6, "name": "Авокадо тост", "url": "src/assets/img/breakfast/b6.png", "descr": "Яйца жареные, авокадо, цельнозерновой хлеб", "price": "40 000"}
+  ],
+  "hot": [
+    {"id": 7, "name": "Стейк с картофелем", "url": "src/assets/img/hot/h1.png", "descr": "Говяжий стейк, картофельное пюре, овощи гриль", "price": "95 000"},
+    {"id": 8, "name": "Куриная грудка с овощами", "url": "src/assets/img/hot/h2.png", "descr": "Куриная грудка, брокколи, морковь, рис", "price": "80 000"},
+    {"id": 9, "name": "Лосось с лимоном", "url": "src/assets/img/hot/h3.png", "descr": "Филе лосося, лимон, спаржа, картофель", "price": "100 000"},
+    {"id": 10, "name": "Паста с креветками", "url": "src/assets/img/hot/h4.png", "descr": "Спагетти, креветки, чесночный соус", "price": "70 000"},
+    {"id": 11, "name": "Бефстроганов", "url": "src/assets/img/hot/h5.png", "descr": "Говядина, грибы, лук, сливочный соус", "price": "85 000"},
+    {"id": 12, "name": "Рататуй", "url": "src/assets/img/hot/h6.png", "descr": "Баклажаны, цукини, помидоры, прованские травы", "price": "60 000"}
+  ],
+  "salad": [
+    {"id": 13, "name": "Цезарь", "url": "src/assets/img/salad/s1.png", "descr": "Романо, курица, пармезан, соус цезарь", "price": "55 000"},
+    {"id": 14, "name": "Греческий салат", "url": "src/assets/img/salad/s2.png", "descr": "Помидоры, огурцы, оливки, фета, орегано", "price": "50 000"},
+    {"id": 15, "name": "Нисуаз", "url": "src/assets/img/salad/s3.png", "descr": "Тунец, яйца, картофель, зеленая фасоль", "price": "65 000"},
+    {"id": 16, "name": "Салат с авокадо", "url": "src/assets/img/salad/s4.png", "descr": "Авокадо, шпинат, кедровые орехи, лимонный соус", "price": "45 000"},
+    {"id": 17, "name": "Салат с киноа", "url": "src/assets/img/salad/s5.png", "descr": "Киноа, авокадо, черри, шпинат, орехи", "price": "60 000"},
+    {"id": 18, "name": "Оливье", "url": "src/assets/img/salad/s6.png", "descr": "Картофель, морковь, яйца, колбаса, майонез", "price": "40 000"}
+  ],
+  "dessert": [
+    {"id": 19, "name": "Чизкейк", "url": "src/assets/img/dessert/d1.png", "descr": "Сыр маскарпоне, клубника, основа из печенья", "price": "70 000"},
+    {"id": 20, "name": "Тирамису", "url": "src/assets/img/dessert/d2.png", "descr": "Савоярди, кофе, маскарпоне, какао", "price": "75 000"},
+    {"id": 21, "name": "Профитроли", "url": "src/assets/img/dessert/d3.png", "descr": "Заварное тесто, крем патисьер, шоколад", "price": "55 000"},
+    {"id": 22, "name": "Мороженое", "url": "src/assets/img/dessert/d4.png", "descr": "Ванильное мороженое, шоколадный соус, орехи", "price": "35 000"},
+    {"id": 23, "name": "Яблочный пирог", "url": "src/assets/img/dessert/d5.png", "descr": "Песочное тесто, яблоки, корица, ваниль", "price": "50 000"},
+    {"id": 24, "name": "Крем-брюле", "url": "src/assets/img/dessert/d6.png", "descr": "Заварной крем, карамелизированный сахар", "price": "45 000"}
+  ],
+  "cocktail": [
+    {"id": 25, "name": "Маргарита", "url": "src/assets/img/cocktails/c1.png", "descr": "Текила, трипл сек, свежий лаймовый сок", "price": "70 000"},
+    {"id": 26, "name": "Мохито", "url": "src/assets/img/cocktails/c2.png", "descr": "Белый ром, мята, сахар, лайм, газированная вода", "price": "60 000"},
+    {"id": 27, "name": "Куба Либре", "url": "src/assets/img/cocktails/c3.png", "descr": "Темный ром, кола, лайм", "price": "50 000"},
+    {"id": 28, "name": "Пина Колада", "url": "src/assets/img/cocktails/c4.png", "descr": "Белый ром, кокосовое молоко, ананасовый сок", "price": "75 000"},
+    {"id": 29, "name": "Негрони", "url": "src/assets/img/cocktails/c5.png", "descr": "Джин, кампари, красный вермут", "price": "80 000"},
+    {"id": 30, "name": "Дайкири", "url": "src/assets/img/cocktails/c6.png", "descr": "Белый ром, сахарный сироп, свежий сок лайма", "price": "65 000"}
+  ],
+  "wine": [
+    {"id": 31, "name": "Шардоне", "url": "src/assets/img/wine/w1.png", "descr": "", "price": "90 000"},
+    {"id": 32, "name": "Каберне Совиньон", "url": "src/assets/img/wine/w2.png", "descr": "", "price": "100 000"},
+    {"id": 33, "name": "Мерло", "url": "src/assets/img/wine/w3.png", "descr": "", "price": "85 000"},
+    {"id": 34, "name": "Совиньон Блан", "url": "src/assets/img/wine/w4.png", "descr": "", "price": "75 000"},
+    {"id": 35, "name": "Пино Нуар", "url": "src/assets/img/wine/w5.png", "descr": "", "price": "95 000"},
+    {"id": 36, "name": "Розе", "url": "src/assets/img/wine/w6.png", "descr": "", "price": "65 000"}
+  ],
+  "beer": [
+    {"id": 37, "name": "Лагер", "url": "src/assets/img/beer/b1.png", "descr": "", "price": "45 000"},
+    {"id": 38, "name": "Пилснер", "url": "src/assets/img/beer/b2.png", "descr": "", "price": "50 000"},
+    {"id": 39, "name": "IPA", "url": "src/assets/img/beer/b3.png", "descr": "", "price": "55 000"}
+  ],
+  "non": [
+    {"id": 43, "name": "Апельсиновый сок", "url": "src/assets/img/non/n1.png", "descr": "", "price": "30 000"},
+    {"id": 44, "name": "Яблочный сок", "url": "src/assets/img/non/n2.png", "descr": "", "price": "30 000"},
+    {"id": 45, "name": "Минеральная вода", "url": "src/assets/img/non/n3.png", "descr": "", "price": "15 000"},
+    {"id": 46, "name": "Газированная вода", "url": "src/assets/img/non/n4.png", "descr": "", "price": "7 000"},
+    {"id": 47, "name": "Вода без газа", "url": "src/assets/img/non/n5.png", "descr": "", "price": "5 000"},
+    {"id": 48, "name": "Кофе", "url": "src/assets/img/non/n6.png", "descr": "", "price": "35 000"}
+  ]
+}

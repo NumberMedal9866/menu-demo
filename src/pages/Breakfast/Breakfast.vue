@@ -2,7 +2,7 @@
   <div>
     <router-link to="/menu" class="menu-btn container">Посмотреть заказ</router-link>
     <div class="header">
-      <router-link to="/">←</router-link>
+      <router-link to="/"><img src="@/assets/img/back.svg" alt=""></router-link>
     </div>
     <div class="container home">
       <Info />

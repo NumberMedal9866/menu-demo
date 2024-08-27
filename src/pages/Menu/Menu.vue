@@ -4,7 +4,10 @@
     </div>
     <div class="container home">
         <Info/>
-        <h2>МОЙ ЗАКАЗ:</h2>
+        <h2 v-if="cartItems.length">МОЙ ЗАКАЗ:</h2>
+        <div v-else>
+            <p class="empty">Ваш заказ пуст.</p>
+        </div>        
         <div class="cart-holder" v-if="cartItems.length">
             <div v-for="item in cartItems" :key="item.id" class="cart">
                 <h3>{{ item.name }}</h3>
@@ -22,8 +25,9 @@
                 </div>
             </div>
         </div>
-        <div v-else>
-            <p>Ваш заказ пуст.</p>
+        <div v-else class="emp container">
+            <img src="@/assets/img/empty.svg" alt="">
+            <router-link to="/">Вернуться в меню</router-link>
         </div>
     </div>
 </template>

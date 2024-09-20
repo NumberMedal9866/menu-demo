@@ -8,7 +8,9 @@ h2{
     &-holder{
         &-card{
             margin-bottom: 50px;
-
+            &:last-child{
+                margin-bottom: 0;
+            }
             img{
                 width: 100%;
                 border-radius: 30px;

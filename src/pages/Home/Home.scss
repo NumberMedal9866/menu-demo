@@ -57,12 +57,12 @@ h1{
 }
 .card{
     height: 175px;
-    // @include media (420){
-    //     height: 127px;
-    //     font-size: 26px;
-    //     // font-weight: 500;
-    //     letter-spacing: 1px;
-    // }
+    @include media (420){
+        height: 127px;
+        font-size: 26px;
+        // font-weight: 500;
+        letter-spacing: 1px;
+    }
     // @media (max-width: 420px) {
     //     height: 127px;
     //     font-size: 26px;

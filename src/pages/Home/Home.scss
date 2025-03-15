@@ -68,7 +68,7 @@ h1{
         font-size: 26px;
         // font-weight: 500;
         letter-spacing: 1px;
-      }
+    }
     width: 100%;
     display: flex;
     justify-content: center; 
@@ -98,12 +98,13 @@ h1{
         a{
             padding: 0 10px;
         }
+    }
         // &:last-child{
             //     background-image: linear-gradient(rgba(0, 0, 0, 0.5),
             //     rgba(0, 0, 0, 0.3)), url('@/assets/img/dessert.png');
             //     background-repeat: no-repeat;
             // }
-        }
+        
     }
     .break{
         background-image: linear-gradient(rgba(0, 0, 0, 0.5),
@@ -125,7 +126,7 @@ h1{
 
     .cocktail{
         background-image: linear-gradient(rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.3)), url('/src/assets/img/cocktails/c3.png');
+    rgba(0, 0, 0, 0.3)), url('/src/assets/img/cocktail/c3.png');
     }
     .wine{
         background-image: linear-gradient(rgba(0, 0, 0, 0.5),

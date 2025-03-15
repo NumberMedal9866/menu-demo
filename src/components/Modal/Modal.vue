@@ -113,7 +113,7 @@
     uniqueKey: `${props.food.id}-${extrasKey}`
   });
 
-  // ✅ Clear selections after submission
+  // Clear selections after submission
   selectedCheck.value = null;
   selectedToggle.value = [];
   
@@ -136,15 +136,15 @@
     padding: 20px 20px 0 20px;
     // padding-bottom: 200px;
     /* border-radius: 10px; */
-    border-radius: 20px;
     width: 100%;
     margin-top: 80px;
     margin-bottom: 80px;
-    height: 88vh;
-    @media (max-width: 530px) {
-      height: 100vh;
-      border-radius: 0;
-    }
+    // border-radius: 20px;
+    // height: 88vh;
+    // @media (max-width: 530px) {
+    // }
+    height: 100vh;
+    border-radius: 0;
     // padding-bottom: 70px;
     display: flex;
     flex-direction: column;

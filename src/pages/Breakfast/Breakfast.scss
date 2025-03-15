@@ -95,8 +95,13 @@ h2{
         height: 30px;
         width: 30px;
         margin-bottom: 0;
-
+        color: #fff;
+        filter: brightness(100%);
     }
+}
+.opt{
+    width: 22px !important;
+    height: 22px !important;
 }
 // .btn{
 //     position: fixed;

@@ -16,7 +16,12 @@
               <h4>{{ food.descr }}</h4>
               <div class="breakfast-holder-card-info-cart">
                 <span class="price">{{ food.price }}</span>
-                <div class="breakfast-holder-card-info-cart-amount">
+                <div class="breakfast-holder-card-info-cart-amount" v-if="food.add === '1'">
+                  <button @click="openModal(food)" class="btn">
+                    <img src="@/assets/img/menu.svg" alt="Add to Cart" class="opt"/>
+                  </button>
+                </div>
+                <div class="breakfast-holder-card-info-cart-amount" v-else>
                   <button v-if="!isInCart(food.id)" @click="addToCart(food.id)" class="btn">
                     <img src="@/assets/img/pw.svg" alt="Add to Cart" />
                   </button>
@@ -37,12 +42,19 @@
       </div>
     </div>
   </div>
+  <Modal  
+    :show="isModalOpen" 
+    :food="selectedFood" 
+    @close="closeModal" 
+    @confirm="addToCartWithExtras" 
+  />
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Info from '@/components/Info/Info.vue';
+import Modal from '@/components/Modal/Modal.vue';
 import breakfastData from '@/data/menu.json';
 
 const allMenus = breakfastData;
@@ -77,7 +89,8 @@ const naming = computed(() => {
 });
 
 const menu = computed(() => allMenus[title.value] || []);
-
+const isModalOpen = ref(false);
+const selectedFood = ref(null);
 // Reactive cart object to store items with their quantities
 const cart = ref({});
 
@@ -129,6 +142,13 @@ const getQuantity = (id) => cart.value[id]?.quantity || 0;
 
 // Check if a product is in the cart
 const isInCart = (id) => !!cart.value[id];
+// const opt = (id) => !!cart.value.add[id];
+// console.log(menu.value[0].add);
+if (menu.value[0].add) {
+  console.log('данунафиг');
+  
+}
+
 
 const resolveImagePath = (category, file) => {
   try {
@@ -143,6 +163,45 @@ const resolveImagePath = (category, file) => {
 onMounted(() => {
   loadCartFromLocalStorage();
 });
+
+const openModal = (food) => {
+  selectedFood.value = food;
+  isModalOpen.value = true;
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+};
+
+
+const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
+  const selectedCheck = food.check?.[check]?.name || "";
+  const checkPrice = parseInt(food.check?.[check]?.price.replace(/\s/g, ""), 10) || 0;
+
+  const selectedToppings = toggle?.map(key => food.toggle?.[key]?.name) || [];
+  const toppingsPrice = toggle?.reduce((total, key) => {
+    return total + (parseInt(food.toggle?.[key]?.price.replace(/\s/g, ""), 10) || 0);
+  }, 0) || 0;
+
+  const basePrice = parseInt(food.price.replace(/\s/g, ""), 10);
+  const totalPrice = basePrice + checkPrice + toppingsPrice;
+
+  // Store item using the unique key
+  if (cart.value[uniqueKey]) {
+    cart.value[uniqueKey].quantity++;
+    cart.value[uniqueKey].totalPrice = (cart.value[uniqueKey].quantity * totalPrice).toLocaleString("ru-RU");
+  } else {
+    cart.value[uniqueKey] = {
+      ...food,
+      quantity: 1,
+      extras: [selectedCheck, ...selectedToppings].filter(Boolean).join(", ") || "Без добавок",
+      totalPrice: totalPrice.toLocaleString("ru-RU")
+    };
+  }
+
+  saveCartToLocalStorage();
+  closeModal();
+};
 </script>
 
 <style lang="scss" scoped>

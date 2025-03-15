@@ -3,19 +3,19 @@
         <div class="home-info">
             <div class="home-info location">
                 <img src="@/assets/img/location.svg" alt="">
-                <p>Chinchilla str. 23b</p>
+                <span>Chinchilla str. 23b</span>
             </div>
             <div class="home-info ">
                 <img src="@/assets/img/phone.svg" alt="">
-                <p>998 33 535 90 20</p>
+                <span>998 33 535 90 20</span>
             </div>
         </div>
         <div class="home-info">
             <img src="@/assets/img/wifi.svg" alt="">
-            <p>QWERTY123</p>
+            <span>QWERTY123</span>
         </div>
         <div class="home-info phone">
-                <p>Здесь вы можете добавить дополнительную информацию для ваших гостей, такую как налоги, цену обслуживания, часы работы ресторана, контакты, условия доставки, общую информацию о вашем QR меню и так далее</p>
+            <span>Здесь вы можете добавить дополнительную информацию для ваших гостей, такую как налоги, цену обслуживания, часы работы ресторана, контакты, условия доставки, общую информацию о вашем QR меню и так далее</span>
         </div>
 </template>
 

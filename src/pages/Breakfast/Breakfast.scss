@@ -1,10 +1,14 @@
 h2{
-    margin-bottom: 30px;
-    font-size: 25px;
+    margin-bottom: 20px;
+    font-size: 23px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 600;
+    font-weight: 400;
+    color: #353535 !important;
 }
 .breakfast{
+    h2{
+        margin-top: 30px;
+    }
     &-holder{
         &-card{
             margin-bottom: 50px;
@@ -13,38 +17,46 @@ h2{
             }
             img{
                 width: 100%;
-                border-radius: 30px;
-                height: 300px;
+                border-radius: 25px;
+                height: 235px;
                 object-fit: cover;
                 filter: brightness(90%);
-                margin-bottom: 10px;
+                // margin-bottom: 10px;
             }
             &-info{
                 display: flex;
                 flex-direction: column;
-                gap: 10px;
+                gap: 7px;
                 h3{
                     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                    font-size: 20px;
-                    font-weight: 500;
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #3d3d3d;
                 }
                 h4{
                     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                    font-size: 15px;
+                    font-size: 14px;
                     font-weight: 400;
+                    color: #545454;
                 }
                 &-cart{
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
                     button{
-                        width: 40px;
-                        height: 40px;
+                        width: 38px;
+                        height: 38px;
                         display: flex;
                         justify-content: center;
                         align-items: center;
+                        // height: 100%;
                         // background: orange;
                         border-radius: 100%;
+                        // img{
+                        //     height: 100%;
+                        //     // margin-top: -2px;
+                        //     // margin-left: -1px;
+                        // }
                     }
                     span{
                         font-size: 25px;
@@ -60,21 +72,21 @@ h2{
 .amount{
     display: flex;
     align-items: center;
-    justify-content: center;gap: 25px; 
+    justify-content: center;gap: 15px; 
     // font-family: apple;
     p{
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-weight: 600;
-        font-size: 30px;
+        font-size: 27px;
         color: orange;
     }
     button{
         display: flex;
         align-items: center;
         img{
-            padding-top: 10px;
-            width: 40px;
-            height: 40px;
+            // padding-top: 10px;
+            width: 25px;
+            height: 25px;
         }
     }
 }
@@ -96,6 +108,7 @@ h2{
         width: 30px;
         margin-bottom: 0;
         color: #fff;
+        padding: 2px;
         filter: brightness(100%);
     }
 }

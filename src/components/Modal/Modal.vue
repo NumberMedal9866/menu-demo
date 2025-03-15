@@ -18,9 +18,15 @@
                                     <div class="toggle-org">
                                     <div class="toggle-org-coc">
                                     <input type="radio" :name="'check-' + food.id" :value="key" v-model="selectedCheck" required>
-                                    {{ value.name }}
+                                    
+                                      {{ value.name }}
+                                      
+                                    
                                     </div>
-                                    +{{ value.price }}
+                                    <span>
+
+                                      +{{ value.price }}
+                                    </span>
                                     </div>
                                 </label>
                             </li>
@@ -46,9 +52,15 @@
                                     <div class="toggle-org">
                                         <div class="toggle-org-coc">
                                             <input type="checkbox" v-model="selectedToggle" :value="key" :id="'toggle-' + key">
-                                            {{ value.name }}
+                                            
+
+                                              {{ value.name }}
+                                            
                                         </div>
-                                        +{{ value.price }}
+                                        <span>
+
+                                          +{{ value.price }}
+                                        </span>
                                     </div>
                                 </label>
                             </li>
@@ -129,6 +141,10 @@
     margin-top: 80px;
     margin-bottom: 80px;
     height: 88vh;
+    @media (max-width: 530px) {
+      height: 100vh;
+      border-radius: 0;
+    }
     // padding-bottom: 70px;
     display: flex;
     flex-direction: column;
@@ -139,11 +155,12 @@
   .beten{
         padding: 10px 15px;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-weight: 500;
+        font-weight: 600;
         color: #fff;
         background: orange;
         height: max-content;
-        border-radius: 5px;
+        border-radius: 9px;
+        font-size: 14px;
     }
   .modal-content {
     width: 100%;
@@ -159,7 +176,7 @@
     // margin-top: 80px;
     // margin-bottom: 80px;
     // height: 88vh;
-    position: relative;
+    // position: relative;
     overflow-y: auto;
     &-main{
         width: 100%;
@@ -172,19 +189,28 @@
         height: 90px;
         display: flex;
         align-items: center;
+        position: relative;
+        top: 0;
         // padding: 5px 10px;
         // font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         // font-weight: 500;
         // color: #fff;
         // background: orange;
+        button{
+          margin-top: 10px;
+        }
     }
 
     h2{
         margin-bottom: 0;
+        font-weight: 600;
+        // color: 4c4c4c;
     }
     h4{
-        margin-bottom: 10px;
-        font-weight: 300;
+        margin-top: 10px;
+        margin-bottom: 40px;
+        font-weight: 400;
+        color: #424141;
     }
   }
   h4{
@@ -209,12 +235,14 @@
   }
   .close-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    z-index: 999;
+    background: #fff;
+    top: 15px;
+    right: 15px;
     border-radius: 100%;
     cursor: pointer;
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;align-items: center;
@@ -242,7 +270,8 @@
     p{
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         margin: 10px 0;
-        font-weight: 400;
+        font-weight: 500;
+        color: #353535;
     }
     &-org{
         display: flex;
@@ -254,7 +283,23 @@
 
         }
         &-coc{
-            
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 4px;
+          font-size: 13px;
+          font-weight: 500;
+            color: #7a7a7a;
+            &:last-child{
+              margin-bottom: 30px !important;
+            }
+            // font-size: 13px;
+        }
+        span{
+          color: orange;
+          font-weight: 600;
+          font-size: 17px;
+          letter-spacing: 0px !important;
         }
     }
   }

@@ -4,7 +4,7 @@
     </div>
     <div class="container home">
       <Info/>
-      <h2 v-if="cartItems.length">МОЙ ЗАКАЗ:</h2>
+      <h2 v-if="cartItems.length" class="clash">МОЙ ЗАКАЗ:</h2>
       <div v-else>
         <p class="empty">Ваш заказ пуст.</p>
       </div>        
@@ -16,7 +16,7 @@
       <div class="cart-price">
         <span>{{ item.totalPrice || item.price }} сум</span>
         <!-- <p v-if="item.extras">Дополнения: {{ item.extras }}</p> -->
-        <div class="amount">
+        <div class="amount amount-men">
           <button @click="decrease(item.cartKey)">
             <img src="@/assets/img/minus.svg" alt="Decrease quantity">
           </button>

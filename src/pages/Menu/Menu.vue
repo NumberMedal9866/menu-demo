@@ -1,6 +1,12 @@
 <template>
     <div class="header">
+
       <router-link to="/"><img src="@/assets/img/left.svg" alt=""></router-link>
+      <select v-model="locale" @change="changeLanguage">
+        <option value="en">English</option>
+        <option value="ru">Русский</option>
+        <option value="uz">O'zbekcha</option>
+      </select>
     </div>
     <div class="container home">
       <Info/>
@@ -37,12 +43,14 @@
   <span>Всего:</span>
   <p>{{totalCartPrice }}</p>
 </div>
+
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import Info from '@/components/Info/Info.vue';
-
+import { useI18n } from 'vue-i18n';
+const { t, locale } = useI18n();
 // Reactive cart object to store items with their quantities
 const newObject = ref({});
 
@@ -91,6 +99,10 @@ const cartItemsLength = computed(() => {
 
 // Load the cart data when the component is mounted
 onMounted(() => {
+  const savedLang = localStorage.getItem("lang");
+  if (savedLang) {
+    locale.value = savedLang;
+  }
   loadCartFromLocalStorage();
 });
 // console.log(newObject.value[0].extra);
@@ -100,6 +112,11 @@ const totalCartPrice = computed(() => {
     return total + (itemPrice * item.quantity);
   }, 0).toLocaleString("ru-RU") + " сум"; // Format price
 });
+const changeLanguage = (event) => {
+  const newLang = event.target.value;
+  locale.value = newLang;
+  localStorage.setItem("lang", newLang);
+};
 </script>
 
 <style lang="scss" scoped>

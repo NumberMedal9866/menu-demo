@@ -12,6 +12,7 @@
     "pinia": "^2.2.2",
     "rollup": "^4.21.0",
     "vue": "^3.4.37",
+    "vue-i18n": "^11.1.2",
     "vue-router": "^4.4.3"
   },
   "devDependencies": {

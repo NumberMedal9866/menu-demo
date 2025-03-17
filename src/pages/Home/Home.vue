@@ -3,45 +3,51 @@
       <router-link to="/menu" class="menu-btn container">
     Посмотреть заказ
   </router-link>
-    <div class="header"></div>
+    <div class="header">
+        <select v-model="locale" @change="changeLanguage">
+            <option value="en">English</option>
+            <option value="ru">Русский</option>
+            <option value="uz">O'zbekcha</option>
+        </select>
+    </div>
     <div class="container home">
         <Info/>
         <div class="home-btn">
             <p 
                 @click="main = true"
                 :class="{'active': main, 'inactive': !main}"
-            >Основное меню</p>
+            >{{ $t ("main") }}</p>
             <p 
                 @click="main = false"
                 :class="{'inactive': main, 'active': !main}"
-            >Бар</p>
+            >{{ $t ("bar") }}</p>
         </div>
         <div class="card-holder" v-if="main">
             <router-link to="/breakfast" class="card break">
-                <span>завтраки (8:00 - 10:00)</span>
+                <span>{{ $t ("breakfast") }}</span>
             </router-link>
             <router-link  to="/hot" class="card hot">
-                <span>горячие блюда</span>
+                <span>{{ $t ("hot") }}</span>
             </router-link>
             <router-link to="/salad" class="card salad">
-                <span>салаты</span>
+                <span>{{ $t ("salad") }}</span>
             </router-link>
             <router-link to="/dessert" class="card des">
-                <span>дессерты</span>
+                <span>{{ $t ("dessert") }}</span>
             </router-link>
         </div>
         <div class="card-holder" v-else>
             <router-link to="/cocktail" class="card cocktail">
-                <span>коктели</span>
+                <span>{{ $t ("cocktail") }}</span>
             </router-link>
             <router-link  to="/wine" class="card wine">
-                <span>вино</span>
+                <span>{{ $t ("wine") }}</span>
             </router-link>
             <router-link to="/beer" class="card beer">
-                <span>пиво</span>
+                <span>{{ $t ("beer") }}</span>
             </router-link>
             <router-link to="/non" class="card non">
-                <span>безалкогольное</span>
+                <span>{{ $t ("non") }}</span>
             </router-link>
         </div>
     </div>
@@ -50,9 +56,35 @@
 
 <script setup>
     import Info from '@/components/Info/Info.vue'
-    import { ref } from 'vue'
+    import { ref, onMounted } from 'vue'
     const main = ref(true)
-    // import ref
+    import { useI18n } from 'vue-i18n';
+
+const { t, locale } = useI18n();
+
+const changeLanguage = (event) => {
+  const newLang = event.target.value;
+  locale.value = newLang;  // ✅ Updates the language in Vue I18n
+  localStorage.setItem("lang", newLang); // ✅ Stores the selected language
+};
+const cart = ref({});
+
+// Load cart data from localStorage on component mount
+const loadCartFromLocalStorage = () => {
+  const savedCart = JSON.parse(localStorage.getItem('cart'));
+  if (savedCart) {
+    cart.value = savedCart;
+  }
+};
+onMounted(() => {
+  loadCartFromLocalStorage();
+
+  // ✅ Load saved language and apply it
+  const savedLang = localStorage.getItem("lang");
+  if (savedLang) {
+    locale.value = savedLang; // ✅ Use `locale.value` instead of `$i18n.locale`
+  }
+});
 </script>
 
 <style lang="scss" scoped>

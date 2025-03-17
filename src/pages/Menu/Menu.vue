@@ -50,6 +50,8 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import Info from '@/components/Info/Info.vue';
+import { messages } from "@/locales"; // ⬅️ Import your translations
+
 import { useI18n } from 'vue-i18n';
 
 const { t, locale } = useI18n();
@@ -91,12 +93,19 @@ const cartItems = computed(() => {
       cartKey: key,
       translatedName: t(`menuItems.${item.category}.${item.id}.name`, item.name),
       translatedExtras: item.extras
-        ? item.extras.split(", ").map(extra => t(`menuItems.${item.category}.${item.id}.toggle.${extra}.name`, extra)).join(", ")
+        ? item.extras
+            .split(", ")
+            .map(extra => {
+              // Find the key of the extra in the toggle object
+              const toggleKey = Object.keys(messages[locale.value]?.menuItems?.[item.category]?.[item.id]?.toggle || {})
+                .find(key => messages[locale.value]?.menuItems?.[item.category]?.[item.id]?.toggle[key].name === extra);
+              return toggleKey ? t(`menuItems.${item.category}.${item.id}.toggle.${toggleKey}.name`, extra) : extra;
+            })
+            .join(", ")
         : "",
     };
   });
 });
-
 // Compute total price
 const totalCartPrice = computed(() => {
   return cartItems.value.reduce((total, item) => {

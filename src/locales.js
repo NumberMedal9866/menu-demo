@@ -40,12 +40,13 @@ export const messages = {
       "8": { "name": "Salmon with Lemon", "descr": "Salmon fillet, lemon, asparagus, potato" },
       "9": { "name": "Pasta with Shrimps", "descr": "Spaghetti, shrimps, garlic sauce" },
       "10": { "name": "Beef Stroganoff", "descr": "Beef, mushrooms, onion, creamy sauce" },
-      "11": { "name": "Steak with Potatoes", "descr": "Beef steak, mashed potatoes, grilled vegetables" },
+      "11": { "name": "Steak with Potatoes", "descr": "Beef steak, mashed potatoes, grilled vegetables", "check": { "1": { "name": "Medium Rare", "price": "0" }, "2": { "name": "Well Done", "price": "0" } }, "toggle": { "1": { "name": "Mushroom Sauce", "price": "8 000" }, "2": { "name": "Pepper Sauce", "price": "6 000" }, "3": { "name": "Extra Meat", "price": "20 000" } } },
       "12": { "name": "Ratatouille", "descr": "Eggplant, zucchini, tomatoes, Provencal herbs" }
     },
     salad: {
       "13": { "name": "Greek Salad", "descr": "Tomatoes, cucumbers, olives, feta, oregano" },
-      "14": { "name": "Caesar", "descr": "Romaine, chicken, parmesan, Caesar sauce" },
+      // "14": { "name": "Caesar", "descr": "Romaine, chicken, parmesan, Caesar sauce" },
+      "14": { "name": "Caesar", "descr": "Romaine, chicken, parmesan, Caesar sauce", "check": { "1": { "name": "Bread", "price": "2 000" }, "2": { "name": "No Bread", "price": "0" } }, "toggle": { "1": { "name": "Greens", "price": "3 000" }, "2": { "name": "Avocado", "price": "7 000" }, "3": { "name": "Onion", "price": "2 000" }, "4": { "name": "Vegetables", "price": "5 000" }, "5": { "name": "Carrot", "price": "2 000" } } },
       "15": { "name": "Nicoise", "descr": "Tuna, eggs, potatoes, green beans" },
       "16": { "name": "Avocado Salad", "descr": "Avocado, spinach, pine nuts, lemon sauce" },
       "17": { "name": "Quinoa Salad", "descr": "Quinoa, avocado, cherry tomatoes, spinach, nuts" },
@@ -131,12 +132,12 @@ export const messages = {
             "8": { "name": "Лосось с лимоном", "descr": "Филе лосося, лимон, спаржа, картофель" },
             "9": { "name": "Паста с креветками", "descr": "Спагетти, креветки, чесночный соус" },
             "10": { "name": "Бефстроганов", "descr": "Говядина, грибы, лук, сливочный соус" },
-            "hot": { "11": { "id": 11, "name": "Стейк с картофелем", "category": "hot", "file": "h1.png", "descr": "Говяжий стейк, картофельное пюре, овощи гриль", "price": "95 000", "add": "1", "check": { "1": { "name": "Средняя прожарка", "price": "0" }, "2": { "name": "Полная прожарка", "price": "0" } }, "toggle": { "1": { "name": "Грибной соус", "price": "8 000" }, "2": { "name": "Перечный соус", "price": "6 000" }, "3": { "name": "Доп. мясо", "price": "20 000" } } } },
+            "11": { "name": "Стейк с картофелем", "category": "hot", "file": "h1.png", "descr": "Говяжий стейк, картофельное пюре, овощи гриль", "price": "95 000", "add": "1", "check": { "1": { "name": "Средняя прожарка", "price": "0" }, "2": { "name": "Полная прожарка", "price": "0" } }, "toggle": { "1": { "name": "Грибной соус", "price": "8 000" }, "2": { "name": "Перечный соус", "price": "6 000" }, "3": { "name": "Доп. мясо", "price": "20 000" } } },
             "12": { "name": "Рататуй", "descr": "Баклажан, кабачок, томаты, прованские травы" }
         },
         salad: {
             "13": { "name": "Греческий салат", "descr": "Помидоры, огурцы, оливки, фета, орегано" },
-            "14": { "name": "Цезарь", "descr": "Романо, курица, пармезан, соус Цезарь" },
+            "14": { "name": "Цезарь", "descr": "Романо, курица, пармезан, соус Цезарь", "check": { "1": { "name": "Хлеб", "price": "2 000" }, "2": { "name": "Без хлеба", "price": "0" } }, "toggle": { "1": { "name": "Зелень", "price": "3 000" }, "2": { "name": "Авокадо", "price": "7 000" }, "3": { "name": "Лук", "price": "2 000" }, "4": { "name": "Овощи", "price": "5 000" }, "5": { "name": "Морковь", "price": "2 000" } } },
             "15": { "name": "Нисуаз", "descr": "Тунец, яйца, картофель, стручковая фасоль" },
             "16": { "name": "Салат с авокадо", "descr": "Авокадо, шпинат, кедровые орехи, лимонный соус" },
             "17": { "name": "Салат с киноа", "descr": "Киноа, авокадо, черри, шпинат, орехи" },
@@ -223,12 +224,12 @@ export const messages = {
             "8": { "name": "Limonli losos", "descr": "Losos filesi, limon, qushqo‘nmas, kartoshka" },
             "9": { "name": "Krevetkali pasta", "descr": "Spagetti, krevetka, sarimsoqli sous" },
             "10": { "name": "Befstroganov", "descr": "Mol go‘shti, qo‘ziqorin, piyoz, qaymoqli sous" },
-            "hot": { "11": { "id": 11, "name": "Steyk kartoshka bilan", "category": "hot", "file": "h1.png", "descr": "Mol go‘shti steyki, kartoshka pyuresi, qovurilgan sabzavotlar", "price": "95 000", "add": "1", "check": { "1": { "name": "O‘rtacha pishirilgan", "price": "0" }, "2": { "name": "To‘liq pishirilgan", "price": "0" } }, "toggle": { "1": { "name": "Qo‘ziqorinli sous", "price": "8 000" }, "2": { "name": "Murchli sous", "price": "6 000" }, "3": { "name": "Qo‘shimcha go‘sht", "price": "20 000" } } } },
+            "11": { "id": 11, "name": "Steyk kartoshka bilan", "category": "hot", "file": "h1.png", "descr": "Mol go‘shti steyki, kartoshka pyuresi, qovurilgan sabzavotlar", "price": "95 000", "add": "1", "check": { "1": { "name": "O‘rtacha pishirilgan", "price": "0" }, "2": { "name": "To‘liq pishirilgan", "price": "0" } }, "toggle": { "1": { "name": "Qo‘ziqorinli sous", "price": "8 000" }, "2": { "name": "Murchli sous", "price": "6 000" }, "3": { "name": "Qo‘shimcha go‘sht", "price": "20 000" } } },
             "12": { "name": "Ratatuy", "descr": "Baqlajon, qovoq, pomidor, provans giyohlar" }
         },
         salad: {
             "13": { "name": "Gretsiya salati", "descr": "Pomidor, bodring, zaytun, feta pishlog‘i, oregano" },
-            "14": { "name": "Sezar", "descr": "Romen salati, tovuq, parmesan, Sezar sousi" },
+            "14": { "name": "Sezar", "descr": "Romen, tovuq, parmesan, Sezar sousi", "check": { "1": { "name": "Non", "price": "2 000" }, "2": { "name": "Nonsiz", "price": "0" } }, "toggle": { "1": { "name": "Ko‘katlar", "price": "3 000" }, "2": { "name": "Avokado", "price": "7 000" }, "3": { "name": "Piyoz", "price": "2 000" }, "4": { "name": "Sabzavotlar", "price": "5 000" }, "5": { "name": "Sabzi", "price": "2 000" } } },
             "15": { "name": "Nisuaz", "descr": "Tunika, tuxum, kartoshka, ko‘k loviya" },
             "16": { "name": "Avokadoli salat", "descr": "Avokado, ismaloq, kedr yong‘oqlari, limon sousi" },
             "17": { "name": "Kinoali salat", "descr": "Kinoa, avokado, gilos pomidorlari, ismaloq, yong‘oqlar" },

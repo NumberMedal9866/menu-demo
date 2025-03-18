@@ -11,8 +11,7 @@ export default defineConfig({
     devSourcemap: true
   },
   build:{
-    sourcemap: false,
-    minify: 'terser'
+    sourcemap: false
   },
   resolve: {
     alias: {

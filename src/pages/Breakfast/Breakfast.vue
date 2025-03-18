@@ -109,15 +109,26 @@ const cart = ref({});
 // ✅ Fix Lazy Load Animation Delay
 const onImageLoad = (id) => {
   isLoading.value[id] = false;
+  checkAllImagesLoaded();
 };
 
 // ✅ Preload All Images Before User Sees Them
-const preloadImage = (url) => {
-  const img = new Image();
-  img.src = url;
+const preloadAllImages = () => {
+  menu.value.forEach(food => {
+    const img = new Image();
+    img.src = resolveImagePath(food.category, food.file);
+    img.onload = () => {
+      isLoading.value[food.id] = false;
+    };
+  });
 };
-
-
+const checkAllImagesLoaded = () => {
+  if (Object.values(isLoading.value).every(status => status === false)) {
+    setTimeout(() => {
+      allImagesLoaded.value = true; // Trigger full background loading
+    }, 500);
+  }
+};
 
 // const resolveImagePath = (category, file) => {
 //   try {
@@ -193,6 +204,7 @@ onMounted(() => {
   }
   const target = document.querySelector(".container.home"); // Main page container
   if (target) observer.observe(target);
+  
 });
 
 const resolveImagePath = (category, file) => {
@@ -203,7 +215,16 @@ const resolveImagePath = (category, file) => {
     return '';
   }
 };
+onMounted(async () => {
+  menu.value.forEach((food, index) => {
+    if (index < 4) {
+      isLoading.value[food.id] = true; // Load only first few items
+    }
+  });
 
+  await nextTick();
+  preloadAllImages(); // After first render, load everything
+});
 const openModal = (food) => {
   selectedFood.value = food;
   isModalOpen.value = true;
@@ -259,52 +280,6 @@ const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
 </script>
 
 <style lang="scss" scoped>
-// .is-loading .image,
-// .is-loading h3,
-// .is-loading h4,
-// .is-loading .price {
-//   background: #eee;
-//   background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
-//   border-radius: 5px;
-//   background-size: 200% 100%;
-//   animation: 1.5s shine linear infinite;
-// }
-
-// .is-loading .image {
-//   height: 200px;
-//   border-bottom-left-radius: 0;
-//   border-bottom-right-radius: 0;
-// }
-
-// .is-loading h3 {
-//   height: 30px;
-// }
-
-// .is-loading h4 {
-//   height: 20px;
-// }
-
-// .is-loading .price {
-//   height: 20px;
-//   width: 50px;
-// }
-
-// /* ✅ Animation Effect */
-// @keyframes shine {
-//   to {
-//     background-position-x: -200%;
-//   }
-// }
-
-// /* ✅ Lazy Load Blur Effect */
-// .lazy-image {
-//   filter: blur(10px);
-//   transition: filter 0.5s ease-in-out;
-// }
-
-// .lazy-image[lazy="loaded"] {
-//   filter: blur(0);
-// }
 .lazy-image{
   background: #eee;
   background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);

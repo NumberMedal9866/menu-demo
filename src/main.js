@@ -19,7 +19,7 @@ createApp(App)
 .use(createPinia())
 .use(i18n)
 .use(VueLazyLoad, {
-  loading: "/src/assets/img/placeholder.jpg", // Placeholder image
+  // loading: "/src/assets/img/placeholder.jpg", // Placeholder image
   attempt: 1,
   error: '/src/assets/img/error.png'
 })

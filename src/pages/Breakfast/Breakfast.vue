@@ -14,7 +14,8 @@
       <div class="breakfast">
         <h2>{{ t(title) }}</h2>
         <div class="breakfast-holder">
-          <div v-for="food in menu" :key="food.id" class="breakfast-holder-card" :class="{ 'is-loading': isLoading[food.id] }">
+          <div v-for="food in menu" :key="food.id" class=" breakfast-holder-card isLoading">
+          <!-- <div v-for="food in menu" :key="food.id" class="breakfast-holder-card" :class="{ 'is-loading': isLoading[food.id] }"> -->
             
             <!-- Image with Lazy Load -->
             <div class="image">
@@ -87,7 +88,7 @@ import breakfastData from '@/data/menu.json';
 const { t, locale } = useI18n();
 const allMenus = breakfastData;
 const route = useRoute();
-const isLoading = ref(true);
+const isLoading = ref({});
 
 const title = computed(() => route.params.type || "menu");
 
@@ -103,8 +104,8 @@ const isModalOpen = ref(false);
 const selectedFood = ref(null);
 const cart = ref({});
 
-const onImageLoad = () => {
-  isLoading.value = false; // Hide loading state once images load
+const onImageLoad = (id) => {
+  isLoading.value[id] = false;
 };
 
 const loadCartFromLocalStorage = () => {
@@ -155,17 +156,20 @@ const changeLanguage = (event) => {
 };
 
 onMounted(() => {
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 1500); // 1.5s delay before revealing content
   loadCartFromLocalStorage();
-  
+
+  // ✅ Mark all items as loading initially
+  menu.value.forEach((food) => {
+    isLoading.value[food.id] = true;
+  });
+
   const savedLang = localStorage.getItem("lang");
   if (savedLang) {
     locale.value = savedLang;
   }
 });
 
+// ✅ Fix resolveImagePath function syntax
 const resolveImagePath = (category, file) => {
   try {
     return new URL(`/src/assets/img/${category}/${file}`, import.meta.url).href;
@@ -227,6 +231,43 @@ const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
 </script>
 
 <style lang="scss" scoped>
+.is-loading .image,
+.is-loading h3,
+.is-loading h4,
+.is-loading .price {
+  background: #eee;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  border-radius: 5px;
+  background-size: 200% 100%;
+  animation: 1.5s shine linear infinite;
+}
+
+.is-loading .image {
+  height: 200px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.is-loading h3 {
+  height: 30px;
+}
+
+.is-loading h4 {
+  height: 20px;
+}
+
+.is-loading .price {
+  height: 20px;
+  width: 50px;
+}
+
+@keyframes shine {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+/* ✅ Lazy Load Blur Effect */
 .lazy-image {
   filter: blur(10px);
   transition: filter 0.5s ease-in-out;

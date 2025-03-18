@@ -17,11 +17,12 @@
         <h2>{{ t(title) }}</h2>
 
         <div class="breakfast-holder">
-          <div v-for="food in menu" :key="food.id" class="breakfast-holder-card" :class="{ 'is-loading': isLoading[food.id] }">
-            
-            <!-- Image with Lazy Loading & Blur Effect -->
+          <div v-for="food in menu" :key="food.id" class="breakfast-holder-card">
             <div class="image">
+              <!-- Skeleton Loader -->
               <div v-if="isLoading[food.id]" class="skeleton-loader"></div>
+
+              <!-- Image with Lazy Load -->
               <img 
                 v-lazy="resolveImagePath(food.category, food.file)"
                 alt="Item Image"
@@ -30,7 +31,6 @@
               />
             </div>
 
-            <!-- Content Skeleton Loader -->
             <div class="breakfast-holder-card-info">
               <h3 v-if="!isLoading[food.id]">{{ food.name }}</h3>
               <h3 v-else></h3>
@@ -109,7 +109,7 @@ const cart = ref({});
 
 // ✅ Fix Lazy Load Animation Delay
 const onImageLoad = (id) => {
-  isLoading.value[id] = false; // Hide the skeleton loader when the image loads
+  isLoading.value[id] = false; // Hide skeleton for that specific image
 };
 
 // ✅ Preload All Images Before User Sees Them
@@ -183,8 +183,7 @@ onMounted(() => {
   }
   loadCartFromLocalStorage();
   menu.value.forEach(food => {
-    isLoading.value[food.id] = true; // Start with loading state
-    preloadImage(resolveImagePath(food.category, food.file)); // Preload images
+    isLoading.value[food.id] = true;
   });
 
   // ✅ Load Cart Data
@@ -258,50 +257,24 @@ const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
 </script>
 
 <style lang="scss" scoped>
-.is-loading .image,
-.is-loading h3,
-.is-loading h4,
-.is-loading .price {
-  background: #eee;
-  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
-  border-radius: 5px;
-  background-size: 200% 100%;
-  animation: 1.5s shine linear infinite;
-}
+// Skeleton Loading Animation
 .skeleton-loader {
   width: 100%;
-  height: 200px;  // Adjust to match your image height
+  height: 200px;  // Match your image height
   background: linear-gradient(110deg, #f0f0f0 8%, #e0e0e0 18%, #f0f0f0 33%);
   border-radius: 8px;
+  background-size: 200% 100%;
   animation: shine 1.5s infinite linear;
 }
-.is-loading .image {
-  height: 200px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
 
-.is-loading h3 {
-  height: 30px;
-}
-
-.is-loading h4 {
-  height: 20px;
-}
-
-.is-loading .price {
-  height: 20px;
-  width: 50px;
-}
-
-/* ✅ Animation Effect */
+// Loading Animation
 @keyframes shine {
   to {
     background-position-x: -200%;
   }
 }
 
-/* ✅ Lazy Load Blur Effect */
+// Blur Effect for Lazy Loaded Images
 .lazy-image {
   filter: blur(10px);
   transition: filter 0.5s ease-in-out;
@@ -310,4 +283,5 @@ const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
 .lazy-image[lazy="loaded"] {
   filter: blur(0);
 }
+
 </style>

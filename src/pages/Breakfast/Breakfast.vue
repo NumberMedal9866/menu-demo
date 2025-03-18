@@ -80,7 +80,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import Info from '@/components/Info/Info.vue';
@@ -91,6 +91,7 @@ const { t, locale } = useI18n();
 const allMenus = breakfastData;
 const route = useRoute();
 const isLoading = ref({});
+const allImagesLoaded = ref(false);
 
 const title = computed(() => route.params.type || "menu");
 
@@ -106,13 +107,22 @@ const isModalOpen = ref(false);
 const selectedFood = ref(null);
 const cart = ref({});
 
-// ✅ Fix Lazy Load Animation Delay
+// ✅ Handles image load event
 const onImageLoad = (id) => {
   isLoading.value[id] = false;
   checkAllImagesLoaded();
 };
 
-// ✅ Preload All Images Before User Sees Them
+// ✅ Check if all images are loaded
+const checkAllImagesLoaded = () => {
+  if (Object.values(isLoading.value).every(status => status === false)) {
+    setTimeout(() => {
+      allImagesLoaded.value = true;
+    }, 500);
+  }
+};
+
+// ✅ Preload all images after initial render
 const preloadAllImages = () => {
   menu.value.forEach(food => {
     const img = new Image();
@@ -122,22 +132,43 @@ const preloadAllImages = () => {
     };
   });
 };
-const checkAllImagesLoaded = () => {
-  if (Object.values(isLoading.value).every(status => status === false)) {
-    setTimeout(() => {
-      allImagesLoaded.value = true; // Trigger full background loading
-    }, 500);
+
+// ✅ Observe when the page container appears
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      preloadAllImages();
+      observer.disconnect();
+    }
+  });
+});
+
+onMounted(async () => {
+  // Initialize loading state for all images
+  menu.value.forEach(food => {
+    isLoading.value[food.id] = true;
+  });
+
+  await nextTick(); // Wait for Vue to render first
+  preloadAllImages(); // Then load all images
+
+  // ✅ Load cart from storage
+  loadCartFromLocalStorage();
+
+  // ✅ Watch for container visibility
+  const target = document.querySelector(".container.home");
+  if (target) observer.observe(target);
+});
+
+// ✅ Image path resolver
+const resolveImagePath = (category, file) => {
+  try {
+    return new URL(`/src/assets/img/${category}/${file}`, import.meta.url).href;
+  } catch (error) {
+    console.error('Error resolving image path:', error);
+    return '';
   }
 };
-
-// const resolveImagePath = (category, file) => {
-//   try {
-//     return new URL(`/src/assets/img/${category}/${file}`, import.meta.url).href;
-//   } catch (error) {
-//     console.error('Error resolving image path:', error);
-//     return '';
-//   }
-// };
 
 const loadCartFromLocalStorage = () => {
   const savedCart = JSON.parse(localStorage.getItem('cart'));
@@ -149,6 +180,7 @@ const loadCartFromLocalStorage = () => {
 const saveCartToLocalStorage = () => {
   localStorage.setItem('cart', JSON.stringify(cart.value));
 };
+
 const addToCart = (id) => {
   const product = menu.value.find(item => item.id === id);
   if (cart.value[id]) {
@@ -178,53 +210,13 @@ const decrease = (id) => {
 
 const getQuantity = (id) => cart.value[id]?.quantity || 0;
 const isInCart = (id) => !!cart.value[id];
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      preloadImages(); // Load all images in the background
-      observer.disconnect(); // Prevent repeated executions
-    }
-  });
-});
+
 const changeLanguage = (event) => {
   const newLang = event.target.value;
   locale.value = newLang;
   localStorage.setItem("lang", newLang);
 };
 
-onMounted(() => {
-  loadCartFromLocalStorage();
-  menu.value.forEach((food) => {
-    isLoading.value[food.id] = true;
-  });
-
-  const savedLang = localStorage.getItem("lang");
-  if (savedLang) {
-    locale.value = savedLang;
-  }
-  const target = document.querySelector(".container.home"); // Main page container
-  if (target) observer.observe(target);
-  
-});
-
-const resolveImagePath = (category, file) => {
-  try {
-    return new URL(`/src/assets/img/${category}/${file}`, import.meta.url).href;
-  } catch (error) {
-    console.error('Error resolving image path:', error);
-    return '';
-  }
-};
-onMounted(async () => {
-  menu.value.forEach((food, index) => {
-    if (index < 4) {
-      isLoading.value[food.id] = true; // Load only first few items
-    }
-  });
-
-  await nextTick();
-  preloadAllImages(); // After first render, load everything
-});
 const openModal = (food) => {
   selectedFood.value = food;
   isModalOpen.value = true;
@@ -233,7 +225,6 @@ const openModal = (food) => {
 const closeModal = () => {
   isModalOpen.value = false;
 };
-
 const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
   const selectedCheckKey = check || "";
   const selectedCheck = food.check?.[selectedCheckKey]?.name || "";

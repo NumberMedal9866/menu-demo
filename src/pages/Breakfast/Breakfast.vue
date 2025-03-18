@@ -15,9 +15,7 @@
         <h2>{{ t(title) }}</h2>
         <div class="breakfast-holder">
           <div v-for="food in menu" :key="food.id" class="breakfast-holder-card">
-            <!-- Lazy Loaded Image with Blurry Effect -->
-            <img v-lazy="resolveImagePath(food.category, food.file)" alt="Item Image" class="lazy-image"/>
-
+            <img :src="resolveImagePath(food.category, food.file)" alt="Item Image" />
             <div class="breakfast-holder-card-info">
               <h3>{{ food.name }}</h3>
               <h4>{{ food.descr }}</h4>
@@ -202,13 +200,5 @@ const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
 </script>
 
 <style lang="scss" scoped>
-/* Apply Blur Effect */
-.lazy-image {
-  filter: blur(10px);
-  transition: filter 0.5s ease-in-out;
-}
-
-.lazy-image[lazy="loaded"] {
-  filter: blur(0);
-}
+/* Your styles here */
 </style>

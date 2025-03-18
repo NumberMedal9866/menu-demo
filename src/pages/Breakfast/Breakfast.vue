@@ -108,7 +108,7 @@ const cart = ref({});
 
 // ✅ Fix Lazy Load Animation Delay
 const onImageLoad = (id) => {
-  isLoading.value[id] = false; // Hide skeleton for that specific image
+  isLoading.value[id] = false;
 };
 
 // ✅ Preload All Images Before User Sees Them
@@ -138,7 +138,6 @@ const loadCartFromLocalStorage = () => {
 const saveCartToLocalStorage = () => {
   localStorage.setItem('cart', JSON.stringify(cart.value));
 };
-
 const addToCart = (id) => {
   const product = menu.value.find(item => item.id === id);
   if (cart.value[id]) {
@@ -168,7 +167,14 @@ const decrease = (id) => {
 
 const getQuantity = (id) => cart.value[id]?.quantity || 0;
 const isInCart = (id) => !!cart.value[id];
-
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      preloadImages(); // Load all images in the background
+      observer.disconnect(); // Prevent repeated executions
+    }
+  });
+});
 const changeLanguage = (event) => {
   const newLang = event.target.value;
   locale.value = newLang;
@@ -176,22 +182,17 @@ const changeLanguage = (event) => {
 };
 
 onMounted(() => {
-  menu.value.forEach(food => {
-    isLoading.value[food.id] = true; // Start with loading state
-    preloadImage(resolveImagePath(food.category, food.file)); // Preload images
+  loadCartFromLocalStorage();
+  menu.value.forEach((food) => {
+    isLoading.value[food.id] = true;
   });
 
-  // ✅ Load Cart Data
-  const savedCart = JSON.parse(localStorage.getItem('cart'));
-  if (savedCart) {
-    cart.value = savedCart;
-  }
-
-  // ✅ Load Saved Language
   const savedLang = localStorage.getItem("lang");
   if (savedLang) {
     locale.value = savedLang;
   }
+  const target = document.querySelector(".container.home"); // Main page container
+  if (target) observer.observe(target);
 });
 
 const resolveImagePath = (category, file) => {
@@ -258,42 +259,42 @@ const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
 </script>
 
 <style lang="scss" scoped>
-.is-loading .image,
-.is-loading h3,
-.is-loading h4,
-.is-loading .price {
-  background: #eee;
-  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
-  border-radius: 5px;
-  background-size: 200% 100%;
-  animation: 1.5s shine linear infinite;
-}
+// .is-loading .image,
+// .is-loading h3,
+// .is-loading h4,
+// .is-loading .price {
+//   background: #eee;
+//   background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+//   border-radius: 5px;
+//   background-size: 200% 100%;
+//   animation: 1.5s shine linear infinite;
+// }
 
-.is-loading .image {
-  height: 200px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
+// .is-loading .image {
+//   height: 200px;
+//   border-bottom-left-radius: 0;
+//   border-bottom-right-radius: 0;
+// }
 
-.is-loading h3 {
-  height: 30px;
-}
+// .is-loading h3 {
+//   height: 30px;
+// }
 
-.is-loading h4 {
-  height: 20px;
-}
+// .is-loading h4 {
+//   height: 20px;
+// }
 
-.is-loading .price {
-  height: 20px;
-  width: 50px;
-}
+// .is-loading .price {
+//   height: 20px;
+//   width: 50px;
+// }
 
-/* ✅ Animation Effect */
-@keyframes shine {
-  to {
-    background-position-x: -200%;
-  }
-}
+// /* ✅ Animation Effect */
+// @keyframes shine {
+//   to {
+//     background-position-x: -200%;
+//   }
+// }
 
 // /* ✅ Lazy Load Blur Effect */
 // .lazy-image {
@@ -304,5 +305,17 @@ const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
 // .lazy-image[lazy="loaded"] {
 //   filter: blur(0);
 // }
+.lazy-image{
+  background: #eee;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  // border-radius: 5px;
+  background-size: 200% 100%;
+  animation: 0.75ms shine linear infinite;
+}
+@keyframes shine {
+  to {
+    background-position-x: -200%;
+  }
+}
 
 </style>

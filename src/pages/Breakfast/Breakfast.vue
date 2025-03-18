@@ -2,7 +2,7 @@
   <div>
     <router-link to="/menu" class="menu-btn container">{{ t("look") }}</router-link>
     <div class="header">
-      <router-link to="/"><img src="@/assets/img/back.svg" alt=""></router-link>
+      <router-link to="/"><img src="@/assets/img/back.svg" alt="Back"></router-link>
       <select v-model="locale" @change="changeLanguage">
         <option value="en">English</option>
         <option value="ru">Русский</option>
@@ -14,32 +14,52 @@
       <div class="breakfast">
         <h2>{{ t(title) }}</h2>
         <div class="breakfast-holder">
-          <div v-for="food in menu" :key="food.id" class="breakfast-holder-card">
-            <img :src="resolveImagePath(food.category, food.file)" alt="Item Image" />
+          <div v-for="food in menu" :key="food.id" class="breakfast-holder-card" :class="{ 'is-loading': isLoading[food.id] }">
+            
+            <!-- Image with Lazy Load -->
+            <div class="image">
+              <img 
+                v-lazy="resolveImagePath(food.category, food.file)"
+                alt="Item Image"
+                class="lazy-image"
+                @load="onImageLoad(food.id)"
+              />
+            </div>
+
+            <!-- Content Skeleton -->
             <div class="breakfast-holder-card-info">
-              <h3>{{ food.name }}</h3>
-              <h4>{{ food.descr }}</h4>
+              <h3 v-if="!isLoading[food.id]">{{ food.name }}</h3>
+              <h3 v-else></h3>
+              
+              <h4 v-if="!isLoading[food.id]">{{ food.descr }}</h4>
+              <h4 v-else></h4>
+
               <div class="breakfast-holder-card-info-cart">
-                <span class="price">{{ food.price }}</span>
-                <div class="breakfast-holder-card-info-cart-amount" v-if="food.add === '1'">
-                  <button @click="openModal(food)" class="btn">
-                    <img src="@/assets/img/menu.svg" alt="Add to Cart" class="opt"/>
-                  </button>
-                </div>
-                <div class="breakfast-holder-card-info-cart-amount" v-else>
-                  <button v-if="!isInCart(food.id)" @click="addToCart(food.id)" class="btn">
-                    <img src="@/assets/img/pw.svg" alt="Add to Cart" />
-                  </button>
-                  <div v-else class="amount">
-                    <button @click.stop="decrease(food.id)">
-                      <img src="@/assets/img/minus.svg" alt="Decrease" />
-                    </button>
-                    <p>{{ getQuantity(food.id) }}</p>
-                    <button @click.stop="increase(food.id)">
-                      <img src="@/assets/img/plus.svg" alt="Increase" />
+                <span class="price" v-if="!isLoading[food.id]">{{ food.price }}</span>
+                <span class="price" v-else></span>
+
+                <div v-if="!isLoading[food.id]">
+                  <div class="breakfast-holder-card-info-cart-amount" v-if="food.add === '1'">
+                    <button @click="openModal(food)" class="btn">
+                      <img src="@/assets/img/menu.svg" alt="Add to Cart" class="opt"/>
                     </button>
                   </div>
+                  <div class="breakfast-holder-card-info-cart-amount" v-else>
+                    <button v-if="!isInCart(food.id)" @click="addToCart(food.id)" class="btn">
+                      <img src="@/assets/img/pw.svg" alt="Add to Cart" />
+                    </button>
+                    <div v-else class="amount">
+                      <button @click.stop="decrease(food.id)">
+                        <img src="@/assets/img/minus.svg" alt="Decrease" />
+                      </button>
+                      <p>{{ getQuantity(food.id) }}</p>
+                      <button @click.stop="increase(food.id)">
+                        <img src="@/assets/img/plus.svg" alt="Increase" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -55,6 +75,7 @@
   />
 </template>
 
+
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
@@ -66,6 +87,7 @@ import breakfastData from '@/data/menu.json';
 const { t, locale } = useI18n();
 const allMenus = breakfastData;
 const route = useRoute();
+const isLoading = ref(true);
 
 const title = computed(() => route.params.type || "menu");
 
@@ -80,6 +102,10 @@ const menu = computed(() => {
 const isModalOpen = ref(false);
 const selectedFood = ref(null);
 const cart = ref({});
+
+const onImageLoad = () => {
+  isLoading.value = false; // Hide loading state once images load
+};
 
 const loadCartFromLocalStorage = () => {
   const savedCart = JSON.parse(localStorage.getItem('cart'));
@@ -129,11 +155,15 @@ const changeLanguage = (event) => {
 };
 
 onMounted(() => {
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 1500); // 1.5s delay before revealing content
+  loadCartFromLocalStorage();
+  
   const savedLang = localStorage.getItem("lang");
   if (savedLang) {
     locale.value = savedLang;
   }
-  loadCartFromLocalStorage();
 });
 
 const resolveImagePath = (category, file) => {
@@ -158,19 +188,16 @@ const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
   const selectedCheckKey = check || "";
   const selectedCheck = food.check?.[selectedCheckKey]?.name || "";
 
-  // 🔥 FIX: Use `selectedCheckKey` instead of `selectedCheck`
   const translatedCheck = selectedCheck
     ? t(`menuItems.${food.category}.${food.id}.check.${selectedCheckKey}.name`, selectedCheck)
     : t("noExtras");
 
   const selectedToppingsKeys = toggle || [];
-  
-  // 🔥 FIX: Use the **toggle key** (`key`), NOT the value (`name`)
+
   const translatedToppings = selectedToppingsKeys.map(key =>
     t(`menuItems.${food.category}.${food.id}.toggle.${key}.name`, food.toggle?.[key]?.name || "")
   );
 
-  // Remove undefined translations and join correctly
   const filteredTranslations = translatedToppings.filter(Boolean);
   const extrasText = [translatedCheck, ...filteredTranslations].filter(Boolean).join(", ") || t("noExtras");
 
@@ -189,7 +216,7 @@ const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
     cart.value[uniqueKey] = {
       ...food,
       quantity: 1,
-      extras: extrasText, // ✅ Now always translated properly
+      extras: extrasText,
       totalPrice: totalPrice.toLocaleString("ru-RU"),
     };
   }
@@ -200,5 +227,12 @@ const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
 </script>
 
 <style lang="scss" scoped>
-/* Your styles here */
+.lazy-image {
+  filter: blur(10px);
+  transition: filter 0.5s ease-in-out;
+}
+
+.lazy-image[lazy="loaded"] {
+  filter: blur(0);
+}
 </style>

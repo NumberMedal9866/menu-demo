@@ -116,6 +116,49 @@ h2{
     width: 22px !important;
     height: 22px !important;
 }
+.is-loading {
+    .image,
+    h3,
+    h4,
+    .price {
+      background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+      border-radius: 5px;
+      background-size: 200% 100%;
+      animation: shine 1.5s linear infinite;
+    }
+    .image {
+      height: 200px;
+      width: 100%;
+    }
+    h3 {
+      height: 25px;
+      margin-bottom: 10px;
+    }
+    h4 {
+      height: 18px;
+      margin-bottom: 10px;
+    }
+    .price {
+      height: 20px;
+      width: 80px;
+    }
+  }
+  
+  /* ✅ Image Blur Lazy Load */
+  .lazy-image {
+    filter: blur(10px);
+    transition: filter 0.5s ease-in-out;
+  }
+  .lazy-image[lazy="loaded"] {
+    filter: blur(0);
+  }
+  
+  /* ✅ Loading Animation */
+  @keyframes shine {
+    to {
+      background-position-x: -200%;
+    }
+  }
 // .btn{
 //     position: fixed;
 //     top: 20px;

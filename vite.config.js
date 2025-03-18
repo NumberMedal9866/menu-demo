@@ -10,6 +10,10 @@ export default defineConfig({
   css: {
     devSourcemap: true
   },
+  build:{
+    sourcemap: false,
+    minify: 'terser'
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

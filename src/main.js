@@ -21,6 +21,7 @@ createApp(App)
 .use(VueLazyLoad, {
   loading: "/src/assets/img/placeholder.jpg", // Placeholder image
   attempt: 1,
+  error: '/src/assets/img/error.png'
 })
 
 

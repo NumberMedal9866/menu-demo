@@ -55,38 +55,68 @@
 </template>
 
 <script setup>
-    import Info from '@/components/Info/Info.vue'
-    import { ref, onMounted } from 'vue'
-    const main = ref(true)
-    import { useI18n } from 'vue-i18n';
+import Info from '@/components/Info/Info.vue';
+import { ref, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const { t, locale } = useI18n();
-
-const changeLanguage = (event) => {
-  const newLang = event.target.value;
-  locale.value = newLang;  // ✅ Updates the language in Vue I18n
-  localStorage.setItem("lang", newLang); // ✅ Stores the selected language
-};
+const main = ref(true);
 const cart = ref({});
 
-// Load cart data from localStorage on component mount
-const loadCartFromLocalStorage = () => {
+// ✅ Function to preload images
+const preloadImage = (url) => {
+  const img = new Image();
+  img.src = url;
+};
+
+// ✅ Preload all background images
+const preloadBackgroundImages = () => {
+  const imageUrls = [
+    '/src/assets/img/breakfast.png',
+    '/src/assets/img/steak.png',
+    '/src/assets/img/salad.png',
+    '/src/assets/img/dessert.png',
+    '/src/assets/img/cocktail/c3.png',
+    '/src/assets/img/wine/w3.png',
+    '/src/assets/img/beer/b3.png',
+    '/src/assets/img/non/n2.png'
+  ];
+
+  imageUrls.forEach(preloadImage);
+};
+
+onMounted(() => {
+  preloadBackgroundImages(); // ✅ Preload background images
+  // ✅ Load cart from localStorage
   const savedCart = JSON.parse(localStorage.getItem('cart'));
   if (savedCart) {
-    cart.value = savedCart;
-  }
-};
-onMounted(() => {
-  loadCartFromLocalStorage();
-
-  // ✅ Load saved language and apply it
-  const savedLang = localStorage.getItem("lang");
-  if (savedLang) {
-    locale.value = savedLang; // ✅ Use `locale.value` instead of `$i18n.locale`
-  }
+      cart.value = savedCart;
+    }
+    
+    // ✅ Load saved language
+    const savedLang = localStorage.getItem("lang");
+    if (savedLang) {
+        locale.value = savedLang;
+    }
+    setTimeout(() => {
+    document.querySelectorAll(".card").forEach(el => el.classList.add("loaded"));
+  }, 500); // Add a delay for smooth transition
 });
+
+// ✅ Function to change language
+const changeLanguage = (event) => {
+  const newLang = event.target.value;
+  locale.value = newLang;
+  localStorage.setItem("lang", newLang);
+};
 </script>
 
 <style lang="scss" scoped>
-
+.card {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+.card.loaded {
+  opacity: 1;
+}
 </style>

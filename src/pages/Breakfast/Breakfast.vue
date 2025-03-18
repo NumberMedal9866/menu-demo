@@ -1,6 +1,7 @@
 <template>
   <div>
     <router-link to="/menu" class="menu-btn container">{{ t("look") }}</router-link>
+    
     <div class="header">
       <router-link to="/"><img src="@/assets/img/back.svg" alt="Back"></router-link>
       <select v-model="locale" @change="changeLanguage">
@@ -9,16 +10,18 @@
         <option value="uz">O'zbekcha</option>
       </select>
     </div>
+
     <div class="container home">
       <Info />
       <div class="breakfast">
         <h2>{{ t(title) }}</h2>
+
         <div class="breakfast-holder">
-          <div v-for="food in menu" :key="food.id" class=" breakfast-holder-card isLoading">
-          <!-- <div v-for="food in menu" :key="food.id" class="breakfast-holder-card" :class="{ 'is-loading': isLoading[food.id] }"> -->
+          <div v-for="food in menu" :key="food.id" class="breakfast-holder-card" :class="{ 'is-loading': isLoading[food.id] }">
             
-            <!-- Image with Lazy Load -->
+            <!-- Image with Lazy Loading & Blur Effect -->
             <div class="image">
+              <div v-if="isLoading[food.id]" class="skeleton-loader"></div>
               <img 
                 v-lazy="resolveImagePath(food.category, food.file)"
                 alt="Item Image"
@@ -27,7 +30,7 @@
               />
             </div>
 
-            <!-- Content Skeleton -->
+            <!-- Content Skeleton Loader -->
             <div class="breakfast-holder-card-info">
               <h3 v-if="!isLoading[food.id]">{{ food.name }}</h3>
               <h3 v-else></h3>
@@ -68,6 +71,7 @@
       </div>
     </div>
   </div>
+
   <Modal  
     :show="isModalOpen" 
     :food="selectedFood" 
@@ -75,7 +79,6 @@
     @confirm="addToCartWithExtras" 
   />
 </template>
-
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
@@ -104,8 +107,26 @@ const isModalOpen = ref(false);
 const selectedFood = ref(null);
 const cart = ref({});
 
+// ✅ Fix Lazy Load Animation Delay
 const onImageLoad = (id) => {
-  isLoading.value[id] = false;
+  isLoading.value[id] = false; // Hide the skeleton loader when the image loads
+};
+
+// ✅ Preload All Images Before User Sees Them
+const preloadImage = (url) => {
+  const img = new Image();
+  img.src = url;
+};
+
+
+
+const resolveImagePath = (category, file) => {
+  try {
+    return new URL(`/src/assets/img/${category}/${file}`, import.meta.url).href;
+  } catch (error) {
+    console.error('Error resolving image path:', error);
+    return '';
+  }
 };
 
 const loadCartFromLocalStorage = () => {
@@ -156,28 +177,31 @@ const changeLanguage = (event) => {
 };
 
 onMounted(() => {
-  loadCartFromLocalStorage();
-
-  // ✅ Mark all items as loading initially
-  menu.value.forEach((food) => {
-    isLoading.value[food.id] = true;
-  });
-
   const savedLang = localStorage.getItem("lang");
   if (savedLang) {
     locale.value = savedLang;
   }
+  loadCartFromLocalStorage();
+  menu.value.forEach(food => {
+    isLoading.value[food.id] = true; // Start with loading state
+    preloadImage(resolveImagePath(food.category, food.file)); // Preload images
+  });
+
+  // ✅ Load Cart Data
+  const savedCart = JSON.parse(localStorage.getItem('cart'));
+  if (savedCart) {
+    cart.value = savedCart;
+  }
 });
 
-// ✅ Fix resolveImagePath function syntax
-const resolveImagePath = (category, file) => {
-  try {
-    return new URL(`/src/assets/img/${category}/${file}`, import.meta.url).href;
-  } catch (error) {
-    console.error('Error resolving image path:', error);
-    return '';
-  }
-};
+// const resolveImagePath = (category, file) => {
+//   try {
+//     return new URL(`/src/assets/img/${category}/${file}`, import.meta.url).href;
+//   } catch (error) {
+//     console.error('Error resolving image path:', error);
+//     return '';
+//   }
+// };
 
 const openModal = (food) => {
   selectedFood.value = food;
@@ -192,16 +216,19 @@ const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
   const selectedCheckKey = check || "";
   const selectedCheck = food.check?.[selectedCheckKey]?.name || "";
 
+  // 🔥 FIX: Use `selectedCheckKey` instead of `selectedCheck`
   const translatedCheck = selectedCheck
     ? t(`menuItems.${food.category}.${food.id}.check.${selectedCheckKey}.name`, selectedCheck)
     : t("noExtras");
 
   const selectedToppingsKeys = toggle || [];
-
+  
+  // 🔥 FIX: Use the **toggle key** (`key`), NOT the value (`name`)
   const translatedToppings = selectedToppingsKeys.map(key =>
     t(`menuItems.${food.category}.${food.id}.toggle.${key}.name`, food.toggle?.[key]?.name || "")
   );
 
+  // Remove undefined translations and join correctly
   const filteredTranslations = translatedToppings.filter(Boolean);
   const extrasText = [translatedCheck, ...filteredTranslations].filter(Boolean).join(", ") || t("noExtras");
 
@@ -220,7 +247,7 @@ const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
     cart.value[uniqueKey] = {
       ...food,
       quantity: 1,
-      extras: extrasText,
+      extras: extrasText, // ✅ Now always translated properly
       totalPrice: totalPrice.toLocaleString("ru-RU"),
     };
   }
@@ -241,7 +268,13 @@ const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
   background-size: 200% 100%;
   animation: 1.5s shine linear infinite;
 }
-
+.skeleton-loader {
+  width: 100%;
+  height: 200px;  // Adjust to match your image height
+  background: linear-gradient(110deg, #f0f0f0 8%, #e0e0e0 18%, #f0f0f0 33%);
+  border-radius: 8px;
+  animation: shine 1.5s infinite linear;
+}
 .is-loading .image {
   height: 200px;
   border-bottom-left-radius: 0;
@@ -261,6 +294,7 @@ const addToCartWithExtras = ({ food, check, toggle, uniqueKey }) => {
   width: 50px;
 }
 
+/* ✅ Animation Effect */
 @keyframes shine {
   to {
     background-position-x: -200%;

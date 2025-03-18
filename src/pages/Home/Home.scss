@@ -120,40 +120,45 @@ select{
             // }
         
     }
-    .break{
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.3)), url('/src/assets/img/breakfast.png');
-    }
-    .hot{
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.3)), url('/src/assets/img/steak.png');
-    }
-    .salad{
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.3)), url('/src/assets/img/salad.png');
-    }
-    .des{
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.3)), url('/src/assets/img/dessert.png');
-    }
-
-
-    .cocktail{
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.3)), url('/src/assets/img/cocktail/c3.png');
-    }
-    .wine{
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.3)), url('/src/assets/img/wine/w3.png');
-    }
-    .beer{
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.3)), url('/src/assets/img/beer/b3.png');
-    }
-    .non{
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.3)), url('/src/assets/img/non/n2.png');
-    }
+    .break {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
+          url("@/assets/img/breakfast.png") center/cover no-repeat;
+      }
+      
+      .hot {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
+          url("@/assets/img/steak.png") center/cover no-repeat;
+      }
+      
+      .salad {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
+          url("@/assets/img/salad.png") center/cover no-repeat;
+      }
+      
+      .des {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
+          url("@/assets/img/dessert.png") center/cover no-repeat;
+      }
+      
+      .cocktail {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
+          url("@/assets/img/cocktail/c3.png") center/cover no-repeat;
+      }
+      
+      .wine {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
+          url("@/assets/img/wine/w3.png") center/cover no-repeat;
+      }
+      
+      .beer {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
+          url("@/assets/img/beer/b3.png") center/cover no-repeat;
+      }
+      
+      .non {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
+          url("@/assets/img/non/n2.png") center/cover no-repeat;
+      }
     .active{
         background: orange;
         border: 3px orange solid;

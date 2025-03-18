@@ -18,15 +18,9 @@ export default defineConfig({
   plugins: [
     vue(),
     ViteImageOptimizer({
-      test: /\.(jpe?g|png|gif|tiff|webp|svg|avif)$/i, 
-      includePublic: true, 
-      logStats: true, 
-      png: { quality: 80 },
-      jpeg: { quality: 80 },
-      webp: { lossless: false, quality: 80 },
-      avif: { lossless: false, quality: 80 },
-      cache: true, // ✅ Enable caching
-      cacheLocation: './.vite-image-cache', // ✅ Define cache location
+      include: ['src/assets/img/**/*.{png,jpg,jpeg,webp}'],  // ✅ Ensures optimization includes all images
+      cache: true,   // ✅ Prevents unnecessary reprocessing
+      logStats: true // ✅ Debugging logs to verify optimization
     }),
     viteCompression({ 
       algorithm: 'gzip', // ✅ Enable Gzip compression

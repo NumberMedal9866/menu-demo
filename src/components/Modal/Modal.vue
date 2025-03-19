@@ -21,6 +21,7 @@
                   <div class="toggle-org-coc">
                     <input type="radio" :name="'check-' + food.id" :value="key" v-model="selectedCheck" required />
                     {{ t(`menuItems.${food.category}.${food.id}.check.${key}.name`) }}
+                    <span class="checkmark-circle checkmark"></span>
                   </div>
                   <span>+{{ value.price }}</span>
                 </div>
@@ -39,6 +40,7 @@
                   <div class="toggle-org-coc">
                     <input type="checkbox" v-model="selectedToggle" :value="key" :id="'toggle-' + key" />
                     {{ t(`menuItems.${food.category}.${food.id}.toggle.${key}.name`) }}
+                    <span class="checkmark"></span>
                   </div>
                   <span>+{{ value.price }}</span>
                 </div>

@@ -10,9 +10,7 @@
 
         <h2>{{ t(`menuItems.${food.category}.${food.id}.name`) }}</h2>
         <h4>{{ t(`menuItems.${food.category}.${food.id}.descr`) }}</h4>
-
-        <!-- Check options (Radio Buttons) -->
-        <div v-if="food?.check" class="toggle">
+        <div v-if="food?.check && Object.keys(food.check).length" class="toggle">
           <p>{{ t("chooseOption") }}</p>
           <ul>
             <li v-for="(value, key) in food.check" :key="key">
@@ -31,7 +29,7 @@
         </div>
 
         <!-- Toggle options (Checkboxes) -->
-        <div v-if="food?.toggle" class="toggle">
+        <div v-if="food?.toggle && Object.keys(food.toggle).length" class="toggle">
           <p>{{ t("extras") }}</p>
           <ul>
             <li v-for="(value, key) in food.toggle" :key="key">
@@ -48,6 +46,8 @@
             </li>
           </ul>
         </div>
+
+
       </div>
 
       <div class="modal-content-btn">
@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onUnmounted } from "vue";
+import { ref, watch, onMounted, onUnmounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -81,7 +81,14 @@ watch(() => props.show, (isOpen) => {
     document.body.classList.remove("modal-open");
   }
 });
-
+// computed: {
+//   safeCheck() {
+//     return this.food?.check ?? {};
+//   },
+//   safeToggle() {
+//     return this.food?.toggle ?? {};
+//   }
+// }
 // ✅ Cleanup when component is unmounted
 onUnmounted(() => {
   document.body.classList.remove("modal-open");

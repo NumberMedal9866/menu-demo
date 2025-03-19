@@ -145,6 +145,7 @@
             }
         }
         span{
+
           color: orange;
           font-weight: 600;
           font-size: 22px;
@@ -171,12 +172,10 @@ body.modal-open {
   height: 22px;
   width: 22px;
   border: 1px solid #878787; /* Outer border */
-  border-radius: 4px; /* Rounded corners */
+  border-radius: 4px; /* Keep the rounded shape */
   position: relative;
-  background-color: white; /* White gap effect */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: white; /* Ensure the outer part stays white */
+  display: flex; /* Helps for better layout */
   &-circle{
     border-radius: 50%;
   }
@@ -189,16 +188,12 @@ body.modal-open {
 //   background-color: orange;
 //   border-radius: 100% !important; /* Keep it rounded */
 // }
-.toggle-org-coc:hover input ~ .checkmark {
-  background-color: #e3e3e3;
-}
+// .toggle-org-coc:hover input ~ .checkmark {
+//   background-color: #e3e3e3;
+// }
 .toggle-org-coc input:checked ~ .checkmark {
-  background-color: orange;
-  box-shadow: 0 0 0 3px white inset;
-  // border-radius: 50%;
-  // border-radius: 100%;
-  // padding: 3px;
-  // border: 3px soild #fff; 
+  background-color: white; /* Keep outer part white */
+  // border-color: orange;
 }
 .checkmark:after {
   content: "";
@@ -214,8 +209,22 @@ body.modal-open {
 .toggle-org-coc input:checked ~ .checkmark::after {
   content: "";
   position: absolute;
-  width: 10px; /* Inner fill size */
-  height: 10px;
+  width: 14px; /* Inner fill size */
+  height: 14px;
   background-color: orange;
-  border-radius: 100%; /* Fully rounded */
+  border-radius: 2px; /* Same as outer border */
+  
+  /* Center it properly */
+  top: 50%;
+  left: 50%;
+  transform: translate(-53%, -52.5%);
+}
+.round{
+  border-radius: 50%;
+}
+.toggle-org-coc input:checked ~ .checkmark-circle::after{
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-52.9%, -48.5%);
 }

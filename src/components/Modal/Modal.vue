@@ -58,10 +58,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch, onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 
-const { t } = useI18n(); // ✅ Import translation function
+const { t } = useI18n();
 
 const props = defineProps({
   show: Boolean,
@@ -72,6 +72,20 @@ const emit = defineEmits(["close", "confirm"]);
 
 const selectedCheck = ref(null);
 const selectedToggle = ref([]);
+
+// ✅ Prevent scrolling when modal is open
+watch(() => props.show, (isOpen) => {
+  if (isOpen) {
+    document.body.classList.add("modal-open");
+  } else {
+    document.body.classList.remove("modal-open");
+  }
+});
+
+// ✅ Cleanup when component is unmounted
+onUnmounted(() => {
+  document.body.classList.remove("modal-open");
+});
 
 const close = () => {
   emit("close");
@@ -106,6 +120,7 @@ const resolveImagePath = (category, file) => {
   }
 };
 </script>
+
   
   <style scoped lang="scss">
   

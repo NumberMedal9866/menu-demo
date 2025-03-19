@@ -217,14 +217,14 @@ body.modal-open {
   /* Center it properly */
   top: 50%;
   left: 50%;
-  transform: translate(-53%, -52.5%);
+  transform: translate(-50%, -50%);
 }
 .round{
   border-radius: 50%;
 }
 .toggle-org-coc input:checked ~ .checkmark-circle::after{
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-52.9%, -48.5%);
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
 }

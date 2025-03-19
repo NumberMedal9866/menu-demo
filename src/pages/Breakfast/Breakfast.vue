@@ -31,15 +31,11 @@
 
             <!-- Content Skeleton Loader -->
             <div class="breakfast-holder-card-info">
-              <h3 v-if="!isLoading[food.id]">{{ food.name }}</h3>
-              <h3 v-else></h3>
-              
-              <h4 v-if="!isLoading[food.id]">{{ food.descr }}</h4>
-              <h4 v-else></h4>
+              <h3>{{ food.name }}</h3>
+              <h4>{{ food.descr }}</h4>
 
               <div class="breakfast-holder-card-info-cart">
-                <span class="price" v-if="!isLoading[food.id]">{{ food.price }}</span>
-                <span class="price" v-else></span>
+                <span class="price">{{ food.price }}</span>
 
                 <div v-if="!isLoading[food.id]">
                   <div class="breakfast-holder-card-info-cart-amount" v-if="food.add === '1'">
@@ -109,8 +105,7 @@ const cart = ref({});
 
 // ✅ Handles image load event
 const onImageLoad = (id) => {
-  isLoading.value[id] = false;
-  checkAllImagesLoaded();
+  isLoading.value[id] = false; // ✅ Only affects images, not text
 };
 
 // ✅ Check if all images are loaded

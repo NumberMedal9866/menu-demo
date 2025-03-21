@@ -2,8 +2,8 @@
   <div class="header">
     <router-link to="/"><img src="@/assets/img/left.svg" alt="Back"></router-link>
     <select v-model="locale" @change="changeLanguage">
-      <option value="en">English</option>
       <option value="ru">Русский</option>
+      <option value="en">English</option>
       <option value="uz">O'zbekcha</option>
     </select>
   </div>

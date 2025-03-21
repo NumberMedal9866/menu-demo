@@ -21,11 +21,11 @@
             
             <!-- Image with Lazy Loading & Blur Effect -->
             <div class="image">
-              <img
-                :data-src="resolveImagePath(food.category, food.file, food.id)"
+              <img 
+                :src="resolveImagePath(food.category, food.file)"
                 alt="Item Image"
                 class="lazy-image"
-                ref="lazyImages"
+                @load="onImageLoad(food.id)"
               />
             </div>
 
@@ -105,7 +105,8 @@ const cart = ref({});
 
 // ✅ Handles image load event
 const onImageLoad = (id, url) => {
-  isLoading.value[id] = false;
+  isLoading.value[food.id] = false;
+
 
   // Store loaded image URL in sessionStorage
   const storedImages = JSON.parse(sessionStorage.getItem("loadedImages")) || {};

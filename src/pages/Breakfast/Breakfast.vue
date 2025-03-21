@@ -105,10 +105,8 @@ const cart = ref({});
 
 // ✅ Handles image load event
 const onImageLoad = (id, url) => {
-  isLoading.value[food.id] = false;
+  isLoading.value[id] = false; // ✅ FIXED: use id passed into the function
 
-
-  // Store loaded image URL in sessionStorage
   const storedImages = JSON.parse(sessionStorage.getItem("loadedImages")) || {};
   storedImages[id] = url;
   sessionStorage.setItem("loadedImages", JSON.stringify(storedImages));

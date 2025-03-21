@@ -22,10 +22,10 @@
             <!-- Image with Lazy Loading & Blur Effect -->
             <div class="image">
               <img 
-                v-lazy="resolveImagePath(food.category, food.file)"
+                v-lazy="resolveImagePath(food.category, food.file, food.id)"
                 alt="Item Image"
                 class="lazy-image"
-                @load="onImageLoad(food.id)"
+                @load="onImageLoad(food.id, resolveImagePath(food.category, food.file, food.id))"
               />
             </div>
 
@@ -104,8 +104,13 @@ const selectedFood = ref(null);
 const cart = ref({});
 
 // ✅ Handles image load event
-const onImageLoad = (id) => {
-  isLoading.value[id] = false; // ✅ Only affects images, not text
+const onImageLoad = (id, url) => {
+  isLoading.value[id] = false;
+
+  // Store loaded image URL in sessionStorage
+  const storedImages = JSON.parse(sessionStorage.getItem("loadedImages")) || {};
+  storedImages[id] = url;
+  sessionStorage.setItem("loadedImages", JSON.stringify(storedImages));
 };
 
 // ✅ Check if all images are loaded
@@ -146,7 +151,14 @@ onMounted(async () => {
 
   await nextTick(); // Wait for Vue to render first
   preloadAllImages(); // Then load all images
-
+  const storedImages = JSON.parse(sessionStorage.getItem("loadedImages")) || {};
+  menu.value.forEach((food) => {
+    if (storedImages[food.id]) {
+      isLoading.value[food.id] = false; // Mark it as loaded
+    } else {
+      isLoading.value[food.id] = true; // If not in cache, mark as loading
+    }
+  });
   // ✅ Load cart from storage
   loadCartFromLocalStorage();
 
@@ -156,12 +168,20 @@ onMounted(async () => {
 });
 
 // ✅ Image path resolver
-const resolveImagePath = (category, file) => {
+const resolveImagePath = (category, file, id) => {
+  // Retrieve cached images from sessionStorage
+  const storedImages = JSON.parse(sessionStorage.getItem("loadedImages")) || {};
+
+  // If image exists in cache, return it
+  if (storedImages[id]) {
+    return storedImages[id];
+  }
+
   try {
     return new URL(`/src/assets/img/${category}/${file}`, import.meta.url).href;
   } catch (error) {
-    console.error('Error resolving image path:', error);
-    return '';
+    console.error("Error resolving image path:", error);
+    return "";
   }
 };
 

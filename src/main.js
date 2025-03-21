@@ -9,8 +9,8 @@ import '@/assets/styles/main.scss'
 
 const i18n = createI18n({
   legacy: false, // ✅ Use Composition API mode
-  locale: localStorage.getItem("lang") || "en", // ✅ Load saved language
-  fallbackLocale: "en",
+  locale: localStorage.getItem("lang") || "ru", // ✅ Load saved language
+  fallbackLocale: "ru",
   messages,
 });
 

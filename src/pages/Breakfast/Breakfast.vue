@@ -21,11 +21,11 @@
             
             <!-- Image with Lazy Loading & Blur Effect -->
             <div class="image">
-              <img 
-                v-lazy="resolveImagePath(food.category, food.file, food.id)"
+              <img
+                :data-src="resolveImagePath(food.category, food.file, food.id)"
                 alt="Item Image"
                 class="lazy-image"
-                @load="onImageLoad(food.id, resolveImagePath(food.category, food.file, food.id))"
+                ref="lazyImages"
               />
             </div>
 
@@ -125,11 +125,9 @@ const checkAllImagesLoaded = () => {
 // ✅ Preload all images after initial render
 const preloadAllImages = () => {
   menu.value.forEach(food => {
+    const src = resolveImagePath(food.category, food.file, food.id);
     const img = new Image();
-    img.src = resolveImagePath(food.category, food.file);
-    img.onload = () => {
-      isLoading.value[food.id] = false;
-    };
+    img.src = src;
   });
 };
 
@@ -137,10 +135,16 @@ const preloadAllImages = () => {
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      preloadAllImages();
-      observer.disconnect();
+      const img = entry.target;
+      const src = img.dataset.src;
+      if (src) {
+        img.src = src;
+        observer.unobserve(img);
+      }
     }
   });
+}, {
+  rootMargin: '300px', // preload before they're visible (can increase this)
 });
 
 onMounted(async () => {
@@ -150,7 +154,7 @@ onMounted(async () => {
   });
 
   await nextTick(); // Wait for Vue to render first
-  preloadAllImages(); // Then load all images
+  setTimeout(preloadAllImages, 1000); // Then load all images
   const storedImages = JSON.parse(sessionStorage.getItem("loadedImages")) || {};
   menu.value.forEach((food) => {
     if (storedImages[food.id]) {
@@ -165,6 +169,8 @@ onMounted(async () => {
   // ✅ Watch for container visibility
   const target = document.querySelector(".container.home");
   if (target) observer.observe(target);
+  const images = document.querySelectorAll('.lazy-image');
+  images.forEach(img => observer.observe(img));
 });
 
 // ✅ Image path resolver
@@ -236,6 +242,7 @@ const openModal = (food) => {
   selectedFood.value = food;
   isModalOpen.value = true;
 };
+
 
 const closeModal = () => {
   isModalOpen.value = false;

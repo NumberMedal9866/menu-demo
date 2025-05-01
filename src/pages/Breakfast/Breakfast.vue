@@ -36,8 +36,7 @@
 
               <div class="breakfast-holder-card-info-cart">
                 <span class="price">{{ food.price }}</span>
-
-                <div v-if="!isLoading[food.id]">
+                <div>
                   <div class="breakfast-holder-card-info-cart-amount" v-if="food.add === '1'">
                     <button @click="openModal(food)" class="btn">
                       <img src="@/assets/img/menu.svg" alt="Add to Cart" class="opt"/>
@@ -58,7 +57,6 @@
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>

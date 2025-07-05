@@ -10,6 +10,8 @@
 
         <h2>{{ t(`menuItems.${food.category}.${food.id}.name`) }}</h2>
         <h4>{{ t(`menuItems.${food.category}.${food.id}.descr`) }}</h4>
+        <h5 class="modal-content-price">{{ food.price }}</h5>
+
         <div v-if="food?.check && Object.keys(food.check).length" class="toggle">
           <p>{{ t("chooseOption") }}</p>
           <ul>
@@ -21,7 +23,7 @@
                     {{ t(`menuItems.${food.category}.${food.id}.check.${key}.name`) }}
                     <span class="checkmark-circle checkmark"></span>
                   </div>
-                  <span>+{{ value.price }}</span>
+                  <span>+ {{ value.price }}</span>
                 </div>
               </label>
             </li>
@@ -58,14 +60,14 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onUnmounted, computed } from "vue";
+import { ref, watch, onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
 const props = defineProps({
   show: Boolean,
-  food: Object
+  food: Object,
 });
 
 const emit = defineEmits(["close", "confirm"]);
@@ -73,23 +75,30 @@ const emit = defineEmits(["close", "confirm"]);
 const selectedCheck = ref(null);
 const selectedToggle = ref([]);
 
+// ✅ Set default selected radio when `food` is loaded
+watch(
+  () => props.food,
+  (newFood) => {
+    if (newFood?.check && Object.keys(newFood.check).length > 0) {
+      selectedCheck.value = Object.keys(newFood.check)[0];
+    }
+  },
+  { immediate: true }
+);
+
 // ✅ Prevent scrolling when modal is open
-watch(() => props.show, (isOpen) => {
-  if (isOpen) {
-    document.body.classList.add("modal-open");
-  } else {
-    document.body.classList.remove("modal-open");
+watch(
+  () => props.show,
+  (isOpen) => {
+    if (isOpen) {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
   }
-});
-// computed: {
-//   safeCheck() {
-//     return this.food?.check ?? {};
-//   },
-//   safeToggle() {
-//     return this.food?.toggle ?? {};
-//   }
-// }
-// ✅ Cleanup when component is unmounted
+);
+
+// ✅ Cleanup
 onUnmounted(() => {
   document.body.classList.remove("modal-open");
 });
@@ -109,7 +118,7 @@ const confirmSelection = () => {
     food: props.food,
     check: selectedCheck.value,
     toggle: selectedToggle.value,
-    uniqueKey: `${props.food.id}-${extrasKey}`
+    uniqueKey: `${props.food.id}-${extrasKey}`,
   });
 
   selectedCheck.value = null;
@@ -127,6 +136,7 @@ const resolveImagePath = (category, file) => {
   }
 };
 </script>
+
 
   
   <style scoped lang="scss">

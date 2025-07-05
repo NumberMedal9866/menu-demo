@@ -25,6 +25,7 @@
         <div class="card-holder" v-if="main">
             <router-link to="/breakfast" class="card break">
                 <span>{{ $t ("breakfast") }}</span>
+                <p>(8:00 - 10:00)</p>
             </router-link>
             <router-link  to="/hot" class="card hot">
                 <span>{{ $t ("hot") }}</span>

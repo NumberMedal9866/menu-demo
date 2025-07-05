@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <router-link to="/"><img src="@/assets/img/left.svg" alt="Back"></router-link>
+    <router-link to="/"><img src="@/assets/img/red/left.svg" alt="Back"></router-link>
     <select v-model="locale" @change="changeLanguage">
       <option value="ru">Русский</option>
       <option value="en">English</option>
@@ -10,9 +10,8 @@
 
   <div class="container home">
     <Info/>
-    <h2 v-if="cartItems.length" class="clash">{{ t("cart") }}:</h2>
-    <div v-else>
-      <p class="empty">{{ t("emptyCart") }}</p>
+    <h2 class="clash">{{ t("cart") }}:</h2>
+    <div>
     </div>
 
     <div class="cart-holder" v-if="cartItems.length">
@@ -21,14 +20,14 @@
         <h4 v-if="item.translatedExtras">{{ t("extras") }}: {{ item.translatedExtras }}</h4>
 
         <div class="cart-price">
-          <span>{{ item.totalPrice || item.price }} сум</span>
+          <span>{{ item.totalPrice || item.price }}</span>
           <div class="amount amount-men">
             <button @click="decrease(item.cartKey)">
-              <img src="@/assets/img/minus.svg" alt="Decrease quantity">
+              -
             </button>
             <p>{{ item.quantity }}</p>
             <button @click="increase(item.cartKey)">
-              <img src="@/assets/img/plus.svg" alt="Increase quantity">
+              +
             </button>
           </div>
         </div>
@@ -36,8 +35,9 @@
     </div>
 
     <div v-else class="emp container">
-      <img src="@/assets/img/empty.svg" alt="Empty cart">
-      <router-link to="/">{{ t("goback") }}</router-link>
+      <img src="@/assets/img/red/cart.png" alt="Empty cart">
+      <p class="empty">{{ t("emptyCart") }}</p>
+      <router-link class="menu-btn-ord" to="/">{{ t("goback") }}</router-link>
     </div>
   </div>
 
@@ -45,15 +45,24 @@
     <span>{{ t("total") }}</span>
     <p>{{ totalCartPrice }}</p>
   </div>
+  <div class="container mod">
+    <button class="menu-btn-ord" v-if="cartItems.length" @click="showModal = true">{{ t("order") }}</button>
+
+  </div>
+  <Order
+    :show="showModal"
+    @close="showModal = false"
+  />
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import Info from '@/components/Info/Info.vue';
 import { messages } from "@/locales"; // ⬅️ Import your translations
-
+import Order from '@/components/Order/Order.vue'
 import { useI18n } from 'vue-i18n';
 
+const showModal = ref(false);
 const { t, locale } = useI18n();
 const newObject = ref({});
 

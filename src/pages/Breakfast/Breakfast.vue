@@ -3,7 +3,7 @@
     <router-link to="/menu" class="menu-btn container">{{ t("look") }}</router-link>
     
     <div class="header">
-      <router-link to="/"><img src="@/assets/img/back.svg" alt="Back"></router-link>
+      <router-link to="/"><img src="@/assets/img/red/left.svg" alt="Back"></router-link>
       <select v-model="locale" @change="changeLanguage">
         <option value="ru">Русский</option>
         <option value="en">English</option>
@@ -48,11 +48,11 @@
                     </button>
                     <div v-else class="amount">
                       <button @click.stop="decrease(food.id)">
-                        <img src="@/assets/img/minus.svg" alt="Decrease" />
+                        -
                       </button>
                       <p>{{ getQuantity(food.id) }}</p>
                       <button @click.stop="increase(food.id)">
-                        <img src="@/assets/img/plus.svg" alt="Increase" />
+                        +
                       </button>
                     </div>
                   </div>

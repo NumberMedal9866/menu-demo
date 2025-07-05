@@ -13,14 +13,15 @@
     overflow-y: auto;
   }
   .beten{
-        padding: 10px 15px;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        padding: 12px 19px;
+        font-family: 'I6';
         font-weight: 600;
         color: #fff;
-        background: orange;
+        background: $prime;
         height: max-content;
-        border-radius: 9px;
-        font-size: 14px;
+        border-radius: 25px;
+        font-size: 16px;
+        width: 200px;
     }
   .modal-content {
     padding: 10px;
@@ -45,14 +46,20 @@
           margin-top: 10px;
         }
     }
-
+    h5{
+      color: $accent;
+      font-family: L6;
+      font-size: 24px;
+      padding-bottom: 20px;
+      border-bottom: $accent 1px solid;
+      width: 100%;
+    }
     h2{
         margin-bottom: 0;
         font-weight: 600;
     }
     h4{
-        margin-top: 10px;
-        margin-bottom: 40px;
+        margin: 10px 0;
         font-weight: 400;
         color: #424141;
     }
@@ -115,7 +122,9 @@
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         margin: 20px 0;
         font-weight: 500;
-        color: #353535;
+        color: $prime;
+        font-family: 'L6';
+        font-size: 18px;
     }
     &-org{
         display: flex;
@@ -132,24 +141,25 @@
           justify-content: center;
           position: relative;
           gap: 4px;
-          font-size: 17px;
-          font-weight: 500;
+          font-family: 'I4';
+          font-size: 16px;
           display: flex;
           flex-direction: row-reverse;
           align-items: center;
           gap: 15px;
           // padding-left: 35px;
-            color: #7a7a7a;
+          color: #656768;
             &:last-child{
               margin-bottom: 30px !important;
             }
         }
         span{
 
-          color: orange;
+          color: $accent;
           font-weight: 600;
-          font-size: 22px;
-          letter-spacing: 0px !important;
+          font-size: 16px;
+          font-family: 'I4';
+          // letter-spacing: 0px !important;
         }
     }
   }
@@ -171,7 +181,7 @@ body.modal-open {
   transition: 1s;
   height: 22px;
   width: 22px;
-  border: 1px solid #878787; /* Outer border */
+  border: 3px solid $prime; /* Outer border */
   border-radius: 4px; /* Keep the rounded shape */
   position: relative;
   background-color: white; /* Ensure the outer part stays white */
@@ -209,9 +219,9 @@ body.modal-open {
 .toggle-org-coc input:checked ~ .checkmark::after {
   content: "";
   position: absolute;
-  width: 14px; /* Inner fill size */
-  height: 14px;
-  background-color: orange;
+  width: 11px; /* Inner fill size */
+  height: 11px;
+  background-color: $prime;
   border-radius: 2px; /* Same as outer border */
   
   /* Center it properly */

@@ -1,6 +1,6 @@
 export const messages = {
     en: {
-      cart: "My Cart",
+      cart: "Order Details",
       total: "Total",
       checkout: "Checkout",
       selectLanguage: "Select Language",
@@ -13,8 +13,8 @@ export const messages = {
       chooseOption: "Please choose an option",
       info: "Here you can add additional information for your guests, such as taxes, service charges, restaurant hours, contacts, delivery conditions, general information about your QR menu, and so on.",
       main: "Main Menu",
-      bar: "Bar",
-      breakfast: "BREAKFAST (8:00 - 10:00)",
+      bar: "Bar Menu",
+      breakfast: "Breakfast",
       hot: "Hot Dishes",
       salad: "Salads",
       dessert: "Desserts",
@@ -24,6 +24,10 @@ export const messages = {
       non: "Non-Alcoholic",
       look: "View Order",
       goback: "Return to Menu",
+      order: "Order Now",
+      agree: "Got it",
+      ord: "To complete your order",
+      waiter: "please show your cart to the waiter.",
       
       // 🛑 Ensure each menu item exists in English
       menuItems: {
@@ -107,7 +111,7 @@ export const messages = {
       info: "Здесь вы можете добавить дополнительную информацию для ваших гостей, такую как налоги, цену обслуживания, часы работы ресторана, контакты, условия доставки, общую информацию о вашем QR меню и так далее",
       main: "Основное меню",
       bar: "Бар",
-      breakfast: "ЗАВТРАКИ (8:00 - 10:00)",
+      breakfast: "Завтраки",
       hot: "Горячие блюда",
       salad: "Салаты",
       dessert: "Десерты",
@@ -117,7 +121,10 @@ export const messages = {
       non: "Безалкогольное",
       look: "Посмотреть заказ",
       goback: "Вернуться в меню",
-      
+      order: "Заказать",
+      agree: "Понятно",
+      ord: "Ваш заказ принят",
+      waiter: "пожалуйста, покажите ваш заказ оффицианту.",
       menuItems: {
         breakfast: {
             "1": { "name": "Яичный тост", "descr": "Жареные яйца, помидор, тост, зеленый лук", "check": { "1": { "name": "Черный Хлеб", "price": "2 000" }, "2": { "name": "Белый Хлеб", "price": "2 000" } }, "toggle": { "1": { "name": "Зелень", "price": "3 000" }, "2": { "name": "Авокадо", "price": "7 000" }, "3": { "name": "Лук", "price": "2 000" }, "4": { "name": "Овощи", "price": "5 000" }, "5": { "name": "Морковка", "price": "2 000" } } },
@@ -199,7 +206,7 @@ export const messages = {
       info: "Bu yerda mehmonlaringiz uchun qo‘shimcha ma’lumot qo‘shishingiz mumkin, masalan, soliqlar, xizmat narxi, restoran ish vaqti, kontaktlar, yetkazib berish shartlari, QR menyu haqida umumiy ma’lumot va hokazo.",
       main: "Asosiy menyu",
       bar: "Bar",
-      breakfast: "NONUSHTA (8:00 - 10:00)",
+      breakfast: "Nonushta",
       hot: "Issiq taomlar",
       salad: "Salatlar",
       dessert: "Desertlar",
@@ -209,7 +216,10 @@ export const messages = {
       non: "Alkogolsiz",
       look: "Buyurtmani ko‘rish",
       goback: "Menyuga qaytish",
-  
+      order: "Buyurtma",
+      agree: "Tushunarli",
+      ord: "Buyurtmangiz qabul qilindi",
+      waiter: "Iltimos, buyurtmangizni ofitsiantga ko'rsating.",
       menuItems: {
         breakfast: {
             "1": { "name": "Tuxumli tost", "descr": "Qovurilgan tuxum, pomidor, tost, ko‘k piyoz", "check": { "1": { "name": "Qora non", "price": "2 000" }, "2": { "name": "Oq non", "price": "2 000" } }, "toggle": { "1": { "name": "Ko‘katlar", "price": "3 000" }, "2": { "name": "Avokado", "price": "7 000" }, "3": { "name": "Piyoz", "price": "2 000" }, "4": { "name": "Sabzavotlar", "price": "5 000" }, "5": { "name": "Sabzi", "price": "2 000" } } },
